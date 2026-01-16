@@ -142,11 +142,21 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
         }
 
-        .nav-scrolled a {
+        .nav-scrolled a:not(#mobile-menu a) {
             color: white !important;
         }
 
-        .nav-scrolled a:hover {
+        .nav-scrolled a:not(#mobile-menu a):hover {
+            color: #D4AF37 !important;
+        }
+
+        /* Keep mobile menu links visible when scrolled */
+        .nav-scrolled #mobile-menu a {
+            color: #374151 !important;
+            /* gray-700 */
+        }
+
+        .nav-scrolled #mobile-menu a:hover {
             color: #D4AF37 !important;
         }
 
@@ -692,7 +702,7 @@
                 <!-- Level 1: President -->
                 <div class="flex justify-center" data-aos="fade-up">
                     <div class="glossy-card rounded-xl overflow-hidden text-center pb-6 w-full max-w-xs relative bg-white/60 backdrop-blur-sm border-sappha-gold/50 shadow-lg shadow-sappha-gold/10"
-                        data-room="ม.4/12">
+                        data-room="ม.4/12" data-quote="&quot;พร้อมนำพาโรงเรียนของเราสู่ยุคใหม่&quot;">
                         <!-- Decor -->
                         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-sappha-gold"></div>
 
@@ -722,7 +732,8 @@
                     class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 justify-center max-w-3xl mx-auto relative z-10">
                     <!-- Secretary -->
                     <div class="glossy-card rounded-xl overflow-hidden text-center pb-6 w-full max-w-xs mx-auto"
-                        data-room="ม.4/1" data-aos="fade-up" data-aos-delay="100">
+                        data-room="ม.4/1" data-quote="&quot;ทำงานด้วยใจ บริการด้วยรอยยิ้ม&quot;" data-aos="fade-up"
+                        data-aos-delay="100">
                         <div class="aspect-[3/4] overflow-hidden relative group">
                             <img src="12.jpg" alt="Secretary"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -737,7 +748,8 @@
 
                     <!-- Deputy Secretary -->
                     <div class="glossy-card rounded-xl overflow-hidden text-center pb-6 w-full max-w-xs mx-auto"
-                        data-room="ม.4/10" data-aos="fade-up" data-aos-delay="200">
+                        data-room="ม.4/10" data-quote="&quot;พร้อมสนับสนุนทุกภารกิจ&quot;" data-aos="fade-up"
+                        data-aos-delay="200">
                         <div class="aspect-[3/4] overflow-hidden relative group">
                             <img src="11.jpg" alt="Deputy Secretary"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -765,7 +777,7 @@
                 <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 relative z-10">
                     <!-- VP 1 -->
                     <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/11"
-                        data-aos="fade-up" data-aos-delay="300">
+                        data-quote="&quot;อำนวยการอย่างมีประสิทธิภาพ&quot;" data-aos="fade-up" data-aos-delay="300">
                         <div class="aspect-[3/4] overflow-hidden relative group">
                             <img src="22.jpg" alt="VP1"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -782,7 +794,7 @@
 
                     <!-- VP 2 -->
                     <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/9"
-                        data-aos="fade-up" data-aos-delay="400">
+                        data-quote="&quot;ส่งเสริมวิชาการ พัฒนาศักยภาพ&quot;" data-aos="fade-up" data-aos-delay="400">
                         <div class="aspect-[3/4] overflow-hidden relative group">
                             <img src="10.jpg" alt="VP2"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -801,7 +813,7 @@
 
                     <!-- VP 3 -->
                     <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/3"
-                        data-aos="fade-up" data-aos-delay="500">
+                        data-quote="&quot;สร้างกิจกรรม สร้างความสุข&quot;" data-aos="fade-up" data-aos-delay="500">
                         <div class="aspect-[3/4] overflow-hidden relative group">
                             <img src="3.jpg" alt="VP3"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -819,7 +831,8 @@
 
                     <!-- VP 4 -->
                     <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/12"
-                        data-aos="fade-up" data-aos-delay="600">
+                        data-quote="&quot;บริหารงานทั่วไป ใส่ใจทุกรายละเอียด&quot;" data-aos="fade-up"
+                        data-aos-delay="600">
                         <div class="aspect-[3/4] overflow-hidden relative group">
                             <img src="13.jpg" alt="VP4"
                                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
@@ -849,8 +862,8 @@
                             data-i18n="dept_finance_header">
                             ฝ่ายการเงินและพัสดุ</h4>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-auto">
-                            <div class="text-center group" data-room="ม.4/8"
-                                data-name="นางสาวทิตติกรณ์ แสงหงษ์ (ใบเตย)">
+                            <div class="text-center group" data-room="ม.4/8" data-name="นางสาวทิตติกรณ์ แสงหงษ์ (ใบเตย)"
+                                data-quote="&quot;ดูแลงบประมาณ สร้างความโปร่งใส&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="23.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -859,7 +872,8 @@
 
                             </div>
                             <div class="text-center group" data-room="ม.4/5"
-                                data-name="นางสาวจันทมณี จันทร์แก้วปง (ใบหม่อน)">
+                                data-name="นางสาวจันทมณี จันทร์แก้วปง (ใบหม่อน)"
+                                data-quote="&quot;จัดการพัสดุ สัมผัสได้&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="24.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -867,7 +881,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/2" data-name="นายณัฐชัย หมอกชื่นใจ (นัวร์)">
+                            <div class="text-center group" data-room="ม.4/2" data-name="นายณัฐชัย หมอกชื่นใจ (นัวร์)"
+                                data-quote="&quot;ความรับผิดชอบคือคุณธรรม&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="19.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -885,7 +900,8 @@
                             ฝ่ายวิชาการ</h4>
                         <div class="grid grid-cols-2 gap-2 mt-auto">
                             <div class="text-center group" data-room="ม.4/5"
-                                data-name="นางสาวณัชชา วิชนภัทรสมุทร (พอใจ)">
+                                data-name="นางสาวณัชชา วิชนภัทรสมุทร (พอใจ)"
+                                data-quote="&quot;เรียนรู้ สร้างสรรค์&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="6.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -893,8 +909,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/12"
-                                data-name="นายพีรพล ทวีทรัพย์ล้ำเลิศ (พี)">
+                            <div class="text-center group" data-room="ม.4/12" data-name="นายพีรพล ทวีทรัพย์ล้ำเลิศ (พี)"
+                                data-quote="&quot;ความรู้คือพลัง&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="21.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -912,7 +928,8 @@
                             data-i18n="dept_reception_header">
                             ฝ่ายปฏิคม</h4>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-auto">
-                            <div class="text-center group" data-room="ม.4/3" data-name="นายศุภวิชญ์ กล่อมยิ้ม (มิกซ์)">
+                            <div class="text-center group" data-room="ม.4/3" data-name="นายศุภวิชญ์ กล่อมยิ้ม (มิกซ์)"
+                                data-quote="&quot;ต้อนรับอย่างอบอุ่น&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="15.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -920,8 +937,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/3"
-                                data-name="นางสาวสุทธญาณ์ กวินวาณิช (อ้วน)">
+                            <div class="text-center group" data-room="ม.4/3" data-name="นางสาวสุทธญาณ์ กวินวาณิช (อ้วน)"
+                                data-quote="&quot;ยินดีต้อนรับสร้างความประทับใจ&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="4.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -929,7 +946,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/4" data-name="นางสาวศิรภัสสร ต๊ะศิริ (แปม)">
+                            <div class="text-center group" data-room="ม.4/4" data-name="นางสาวศิรภัสสร ต๊ะศิริ (แปม)"
+                                data-quote="&quot;บริการด้วยใจจริง&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="2.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -946,7 +964,8 @@
                             data-i18n="dept_pr_header">
                             ฝ่ายประชาสัมพันธ์</h4>
                         <div class="grid grid-cols-2 gap-2 mt-auto">
-                            <div class="text-center group" data-room="ม.4/7" data-name="นางสาวนันทิชา หล้าป๋า (น้ำนัน)">
+                            <div class="text-center group" data-room="ม.4/7" data-name="นางสาวนันทิชา หล้าป๋า (น้ำนัน)"
+                                data-quote="&quot;สื่อสารทั่วถึง สร้างสรรค์ทุกช่องทาง&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="1.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -955,7 +974,8 @@
 
                             </div>
                             <div class="text-center group" data-room="ม.4/7"
-                                data-name="นางสาวกมลพรรณ เมธาวิจิตร (ชมพู่)">
+                                data-name="นางสาวกมลพรรณ เมธาวิจิตร (ชมพู่)"
+                                data-quote="&quot;กราฟิกสวยงาม สื่อสารทันสมัย&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="27.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -973,7 +993,8 @@
                             data-i18n="dept_building_header">
                             ฝ่ายอาคารและศาสนพิธี</h4>
                         <div class="grid grid-cols-2 gap-2 mt-auto">
-                            <div class="text-center group" data-room="ม.4/10" data-name="นายสุรจักษ์ ธรรมใจ (จักร)">
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายสุรจักษ์ ธรรมใจ (จักร)"
+                                data-quote="&quot;ดูแลอาคาร สะอาดสะอ้าน&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="8.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -981,7 +1002,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/7" data-name="นายสมชาย - (ชัย)">
+                            <div class="text-center group" data-room="ม.4/7" data-name="นายสมชาย - (ชัย)"
+                                data-quote="&quot;ศาสนพิธีคือหัวใจ&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="28.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -999,7 +1021,8 @@
                             ฝ่ายนันทนาการและชุมชน</h4>
                         <div class="grid grid-cols-2 gap-2 mt-auto">
                             <div class="text-center group" data-room="ม.4/2"
-                                data-name="นางสาวพรพัสนันท์ เกิดแก้ว (แฟรนด์)">
+                                data-name="นางสาวพรพัสนันท์ เกิดแก้ว (แฟรนด์)"
+                                data-quote="&quot;สร้างสัมพันธ์ สร้างชุมชน&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="18.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1007,7 +1030,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/10" data-name="นายศิรชัช ต๊ะสมัย (คิว)">
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายศิรชัช ต๊ะสมัย (คิว)"
+                                data-quote="&quot;สนุกคือพลัง&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="25.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1025,7 +1049,8 @@
                             ฝ่ายปกครอง</h4>
                         <div class="grid grid-cols-2 md:grid-cols-1 gap-2 mt-auto">
                             <div class="text-center group" data-room="ม.4/1"
-                                data-name="นางสาวสุพิชฌาย์ ชุมภูเทพ (ข้าวปุ่น)">
+                                data-name="นางสาวสุพิชฌาย์ ชุมภูเทพ (ข้าวปุ่น)"
+                                data-quote="&quot;รักษาวินัย สร้างความเป็นระเบียบ&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="20.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1043,7 +1068,8 @@
                             data-i18n="dept_av_header">
                             ฝ่ายโสตทัศนศึกษา</h4>
                         <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-auto">
-                            <div class="text-center group" data-room="ม.4/10" data-name="นายสุวรรณวัฒน์ ก้องเวหา (โต๋)">
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายสุวรรณวัฒน์ ก้องเวหา (โต๋)"
+                                data-quote="&quot;เสียงที่ดี โสตที่คมชัด&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="9.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1051,7 +1077,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/10" data-name="นายณตะวัน สุวรรณจักร์ (ณะโม)">
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายณตะวัน สุวรรณจักร์ (ณะโม)"
+                                data-quote="&quot;ถ่ายภาพชัด จับทุกความทรงจำ&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="17.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1059,7 +1086,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/2" data-name="นางสาวกาญจนา หลอมทอง (ต้นข้าว)">
+                            <div class="text-center group" data-room="ม.4/2" data-name="นางสาวกาญจนา หลอมทอง (ต้นข้าว)"
+                                data-quote="&quot;สร้างสรรค์ผ่านเลนส์&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="7.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1067,7 +1095,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/12" data-name="นางสาวโนโน - (โนโน)">
+                            <div class="text-center group" data-room="ม.4/12" data-name="นางสาวโนโน - (โนโน)"
+                                data-quote="&quot;เทคนิคคือหัวใจ&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="14.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1075,8 +1104,8 @@
 
 
                             </div>
-                            <div class="text-center group" data-room="ม.4/8"
-                                data-name="นางสาวจิณัฐตา กิมวานนท์ (โฟกัส)">
+                            <div class="text-center group" data-room="ม.4/8" data-name="นางสาวจิณัฐตา กิมวานนท์ (โฟกัส)"
+                                data-quote="&quot;โฟกัสให้ชัด ผลงานเฉิดฉาย&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="5.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1094,7 +1123,8 @@
                             data-i18n="dept_committee_header">
                             ฝ่ายคณะกรรมการ</h4>
                         <div class="grid grid-cols-2 md:grid-cols-1 gap-2 mt-auto">
-                            <div class="text-center group" data-room="ม.4/1" data-name="นางสาวสิริกร ธิติวราพร (กร)">
+                            <div class="text-center group" data-room="ม.4/1" data-name="นางสาวสิริกร ธิติวราพร (กร)"
+                                data-quote="&quot;ประสานงาน สร้างความร่วมมือ&quot;">
                                 <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
                                         src="26.jpg"
                                         class="w-full h-full object-cover group-hover:scale-105 transition-transform">
@@ -1214,7 +1244,7 @@
                 </div>
 
                 <div class="mt-6 pt-6 border-t border-gray-100">
-                    <p class="italic text-gray-400 text-sm">"The New Era of Sappha"</p>
+                    <p id="modal-quote" class="italic text-gray-400 text-sm">"The New Era of Sappha"</p>
                 </div>
             </div>
         </div>
@@ -1258,14 +1288,6 @@
             }
         }, 1000);
 
-        // Mobile Menu Toggle
-        const btn = document.getElementById('mobile-menu-btn');
-        const menu = document.getElementById('mobile-menu');
-
-        btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
-        });
-
         // Initialize AOS
         AOS.init({
             duration: 800,
@@ -1281,6 +1303,7 @@
         const modalNickname = document.getElementById('modal-nickname');
         const modalRole = document.getElementById('modal-role');
         const modalClass = document.getElementById('modal-class');
+        const modalQuote = document.getElementById('modal-quote');
 
         function openModal(data) {
             // Populate Data
@@ -1289,6 +1312,7 @@
             modalNickname.textContent = data.nickname || '';
             modalRole.textContent = data.role;
             modalClass.textContent = data.room;
+            modalQuote.textContent = data.quote || '"The New Era of Sappha"';
 
             // Prevent body scroll when modal is open
             document.body.style.overflow = 'hidden';
@@ -1330,6 +1354,7 @@
                     const nameRaw = clean(card.querySelector('h3')?.textContent) || 'Member Name';
                     const roleRaw = clean(card.querySelector('p')?.textContent) || 'Member';
                     const roomRaw = card.getAttribute('data-room') || 'M.6/xx';
+                    const quoteRaw = card.getAttribute('data-quote') || '';
 
                     // Try to parse Nickname from Name (e.g., "Name (Nick)")
                     let name = nameRaw;
@@ -1345,7 +1370,8 @@
                         name: name,
                         nickname: nickname ? `(${nickname})` : '',
                         role: roleRaw,
-                        room: roomRaw
+                        room: roomRaw,
+                        quote: quoteRaw
                     });
                 });
             });
@@ -1360,6 +1386,7 @@
                     const nameRaw = card.dataset.name || clean(card.querySelector('p')?.textContent) || 'Member';
                     // Check for data-room on the group div itself
                     const roomRaw = card.getAttribute('data-room') || '-';
+                    const quoteRaw = card.getAttribute('data-quote') || '';
 
                     // Find Department Name (traversing up)
                     const deptContainer = card.closest('.md\\:col-span-1, .md\\:col-span-2, .md\\:col-span-3, .md\\:col-span-5');
@@ -1379,7 +1406,8 @@
                         name: name,
                         nickname: nickname ? `(${nickname})` : '',
                         role: deptName,
-                        room: roomRaw
+                        room: roomRaw,
+                        quote: quoteRaw
                     });
                 });
             });
@@ -1623,6 +1651,15 @@
             // Close menu when clicking outside
             document.addEventListener('click', (e) => {
                 if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                }
+            });
+
+            // Close menu when scrolling
+            window.addEventListener('scroll', () => {
+                if (!mobileMenu.classList.contains('hidden')) {
                     mobileMenu.classList.add('hidden');
                     menuIcon.classList.remove('fa-xmark');
                     menuIcon.classList.add('fa-bars');
