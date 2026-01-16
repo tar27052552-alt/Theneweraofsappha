@@ -154,10 +154,195 @@
         .nav-scrolled .text-gray-300 {
             color: rgba(255, 255, 255, 0.5) !important;
         }
+
+        /* ===== PRELOADER STYLES ===== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0F172A 0%, #1e293b 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .preloader.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .preloader-logo {
+            width: 120px;
+            height: 120px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .preloader-text {
+            color: #D4AF37;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 20px;
+            letter-spacing: 0.1em;
+        }
+
+        .preloader-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        .preloader-bar-inner {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #D4AF37, #FFC947);
+            border-radius: 2px;
+            animation: loading 1.5s ease-in-out forwards;
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+
+            50% {
+                transform: scale(1.05);
+                opacity: 0.8;
+            }
+        }
+
+        /* ===== DARK MODE STYLES ===== */
+        .dark-mode {
+            --bg-primary: #0F172A;
+            --bg-secondary: #1e293b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+        }
+
+        .dark-mode body,
+        .dark-mode {
+            background-color: var(--bg-primary) !important;
+            color: var(--text-primary) !important;
+        }
+
+        .dark-mode nav {
+            background: rgba(15, 23, 42, 0.95) !important;
+        }
+
+        .dark-mode .bg-white,
+        .dark-mode .bg-sappha-cream {
+            background-color: var(--bg-secondary) !important;
+        }
+
+        .dark-mode .glossy-card {
+            background: rgba(30, 41, 59, 0.95) !important;
+            border-color: rgba(212, 175, 55, 0.3) !important;
+        }
+
+        .dark-mode .text-sappha-text,
+        .dark-mode .text-gray-700,
+        .dark-mode .text-gray-600 {
+            color: var(--text-primary) !important;
+        }
+
+        .dark-mode .text-gray-500 {
+            color: var(--text-secondary) !important;
+        }
+
+        .dark-mode h2,
+        .dark-mode h3,
+        .dark-mode h4 {
+            color: var(--text-primary) !important;
+        }
+
+        .dark-mode .border-gray-100,
+        .dark-mode .border-gray-300 {
+            border-color: rgba(255, 255, 255, 0.1) !important;
+        }
+
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #334155, #475569);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fbbf24;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            border: none;
+        }
+
+        .dark-mode-toggle:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
+        .dark-mode .dark-mode-toggle {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            color: #1e293b;
+        }
+
+        /* ===== LAZY LOADING STYLES ===== */
+        .lazy-img {
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .lazy-img.loaded {
+            opacity: 1;
+        }
+
+        /* ===== SMOOTH SECTION TRANSITIONS ===== */
+        section {
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
     </style>
 </head>
 
 <body class="antialiased overflow-x-hidden w-full">
+
+    <!-- Preloader -->
+    <div class="preloader" id="preloader">
+        <img src="logo.png" alt="Loading..." class="preloader-logo">
+        <p class="preloader-text">The New Era of Sappha</p>
+        <div class="preloader-bar">
+            <div class="preloader-bar-inner"></div>
+        </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button class="dark-mode-toggle" id="darkModeToggle" title="สลับโหมดมืด/สว่าง">
+        <i class="fa-solid fa-moon"></i>
+    </button>
 
     <!-- Scroll Progress Bar -->
     <div class="scroll-progress" id="scrollProgress"></div>
@@ -206,8 +391,8 @@
                 </div>
 
                 <!-- Mobile menu button -->
-                <div class="md:hidden flex items-center">
-                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-sappha-gold focus:outline-none">
+                <div class="md:hidden flex items-center z-50">
+                    <button id="mobile-menu-btn" class="text-sappha-gold hover:text-yellow-400 focus:outline-none p-2">
                         <i class="fa-solid fa-bars text-2xl"></i>
                     </button>
                 </div>
@@ -1105,6 +1290,9 @@
             modalRole.textContent = data.role;
             modalClass.textContent = data.room;
 
+            // Prevent body scroll when modal is open
+            document.body.style.overflow = 'hidden';
+
             // Show Modal
             modal.classList.remove('hidden');
             // Small delay to allow display:block to apply before opacity transition
@@ -1121,6 +1309,8 @@
             modalContent.classList.add('scale-95');
             setTimeout(() => {
                 modal.classList.add('hidden');
+                // Re-enable body scroll when modal is closed
+                document.body.style.overflow = '';
             }, 300);
         }
 
@@ -1324,6 +1514,121 @@
                 });
             }, 400);
         }
+
+        // ===== PRELOADER =====
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.classList.add('fade-out');
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }, 1500); // Show preloader for 1.5 seconds
+        });
+
+        // ===== DARK MODE TOGGLE =====
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (!darkModeToggle) return;
+
+            const darkModeIcon = darkModeToggle.querySelector('i');
+
+            // Check for saved dark mode preference
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.documentElement.classList.add('dark-mode');
+                darkModeIcon.classList.remove('fa-moon');
+                darkModeIcon.classList.add('fa-sun');
+            }
+
+            darkModeToggle.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark-mode');
+
+                if (document.documentElement.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                    darkModeIcon.classList.remove('fa-moon');
+                    darkModeIcon.classList.add('fa-sun');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                    darkModeIcon.classList.remove('fa-sun');
+                    darkModeIcon.classList.add('fa-moon');
+                }
+            });
+        });
+
+        // ===== LAZY LOADING FOR IMAGES =====
+        document.addEventListener('DOMContentLoaded', () => {
+            const lazyImages = document.querySelectorAll('img:not(.preloader-logo)');
+
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.classList.add('lazy-img');
+
+                        // When image loads, add loaded class for fade-in effect
+                        if (img.complete) {
+                            img.classList.add('loaded');
+                        } else {
+                            img.addEventListener('load', () => {
+                                img.classList.add('loaded');
+                            });
+                        }
+
+                        observer.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '50px 0px',
+                threshold: 0.01
+            });
+
+            lazyImages.forEach(img => {
+                imageObserver.observe(img);
+            });
+        });
+    </script>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+            const menuIcon = mobileMenuBtn.querySelector('i');
+
+            // Toggle mobile menu
+            mobileMenuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                mobileMenu.classList.toggle('hidden');
+
+                // Toggle icon between bars and X
+                if (mobileMenu.classList.contains('hidden')) {
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                } else {
+                    menuIcon.classList.remove('fa-bars');
+                    menuIcon.classList.add('fa-xmark');
+                }
+            });
+
+            // Close menu when clicking a link
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                });
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!mobileMenu.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                    mobileMenu.classList.add('hidden');
+                    menuIcon.classList.remove('fa-xmark');
+                    menuIcon.classList.add('fa-bars');
+                }
+            });
+        });
     </script>
 
     <!-- Language Switcher Script -->
