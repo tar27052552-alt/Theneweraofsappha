@@ -1,0 +1,1613 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The New Era of Sappha | สานต่อล้านนา พัฒนาสู่ยุคใหม่</title>
+
+    <!-- Google Fonts: Kanit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        kanit: ['Kanit', 'sans-serif'],
+                    },
+                    colors: {
+                        sappha: {
+                            gold: '#D4AF37',
+                            cream: '#FAFAF5',
+                            navy: '#0F172A', /* Dark Navy */
+                            text: '#1F2937'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        html {
+            width: 100%;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: #FAFAF5;
+            color: #1F2937;
+        }
+
+        .glossy-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .glossy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(212, 175, 55, 0.2);
+            border-color: #D4AF37;
+        }
+
+        .text-shadow-gold {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #D4AF37, #FFC947);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #D4AF37, #f5c842);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
+            z-index: 1000;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .scroll-to-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.6);
+        }
+
+        /* Navbar scroll effect */
+        .nav-scrolled {
+            background: rgba(15, 23, 42, 0.95) !important;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .nav-scrolled a {
+            color: white !important;
+        }
+
+        .nav-scrolled a:hover {
+            color: #D4AF37 !important;
+        }
+
+        .nav-scrolled .text-gray-500,
+        .nav-scrolled .text-gray-300 {
+            color: rgba(255, 255, 255, 0.5) !important;
+        }
+    </style>
+</head>
+
+<body class="antialiased overflow-x-hidden w-full">
+
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" title="กลับขึ้นด้านบน">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Navbar -->
+    <nav
+        class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm border-b border-sappha-gold/20 left-0 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="flex items-center gap-2">
+                        <img src="logo.png" alt="The New Era of Sappha Logo" class="h-16 w-auto">
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" data-i18n="nav_home"
+                        class="text-sappha-text hover:text-sappha-gold font-medium transition-colors">หน้าแรก</a>
+                    <a href="#vision" data-i18n="nav_vision"
+                        class="text-sappha-text hover:text-sappha-gold font-medium transition-colors">วิสัยทัศน์</a>
+                    <a href="#policies" data-i18n="nav_policies"
+                        class="text-sappha-text hover:text-sappha-gold font-medium transition-colors">นโยบาย</a>
+                    <a href="#team" data-i18n="nav_team"
+                        class="text-sappha-text hover:text-sappha-gold font-medium transition-colors">สมาชิกของพรรค</a>
+                    <a href="#contact" data-i18n="nav_contact"
+                        class="text-sappha-text hover:text-sappha-gold font-medium transition-colors">ติดต่อเรา</a>
+                </div>
+
+                <!-- Lang Switcher -->
+                <div class="hidden md:flex items-center space-x-2 border-l pl-4 border-gray-300">
+                    <span onclick="setLanguage('th')" id="lang-btn-th"
+                        class="text-sm cursor-pointer hover:text-sappha-gold font-bold text-sappha-gold transition-colors">TH</span>
+                    <span class="text-gray-300">|</span>
+                    <span onclick="setLanguage('en')" id="lang-btn-en"
+                        class="text-sm cursor-pointer hover:text-sappha-gold text-gray-500 transition-colors">EN</span>
+                    <span class="text-gray-300">|</span>
+                    <span onclick="setLanguage('my')" id="lang-btn-my"
+                        class="text-sm cursor-pointer hover:text-sappha-gold text-gray-500 transition-colors">MY</span>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-gray-600 hover:text-sappha-gold focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" data-i18n="nav_home"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sappha-gold hover:bg-sappha-cream rounded-md">หน้าแรก</a>
+                <a href="#vision" data-i18n="nav_vision"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sappha-gold hover:bg-sappha-cream rounded-md">วิสัยทัศน์</a>
+                <a href="#policies" data-i18n="nav_policies"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sappha-gold hover:bg-sappha-cream rounded-md">นโยบาย</a>
+                <a href="#team" data-i18n="nav_team"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sappha-gold hover:bg-sappha-cream rounded-md">สมาชิกของพรรค</a>
+                <a href="#contact" data-i18n="nav_contact"
+                    class="block px-3 py-2 text-base font-medium text-gray-700 hover:text-sappha-gold hover:bg-sappha-cream rounded-md">ติดต่อเรา</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative w-full h-screen flex items-center justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="hero_bg_new.png" alt="Traditional Modern Lanna Background" class="w-full h-full object-cover">
+            <div class="absolute inset-0 bg-sappha-navy/70 mix-blend-multiply"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-sappha-cream"></div>
+        </div>
+        <div class="absolute inset-0 bg-sappha-navy/70 mix-blend-multiply"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-sappha-cream"></div>
+        </div>
+
+        <div class="relative z-10 text-center px-4 max-w-5xl mx-auto" data-aos="fade-up" data-aos-duration="1000">
+            <p class="text-sappha-gold tracking-[0.2em] font-light mb-4 text-lg md:text-xl uppercase"
+                data-aos="fade-down" data-aos-delay="200" data-i18n="hero_subtitle_top">Creating The
+                Future Together</p>
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-white mb-6 leading-tight drop-shadow-2xl"
+                data-aos="zoom-in" data-aos-delay="400">
+                The New Era <br /><span class="text-sappha-gold">of Sappha</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-200 mb-10 font-light max-w-3xl mx-auto" data-aos="fade-up"
+                data-aos-delay="600" data-i18n="hero_slogan">
+                "สานต่อล้านนา พัฒนาสู่ยุคใหม่ ด้วยหัวใจพหุวัฒนธรรม"
+            </p>
+            <a href="#vision"
+                class="inline-block px-8 py-4 bg-sappha-gold hover:bg-yellow-600 text-white font-bold text-lg rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg shadow-sappha-gold/30"
+                data-aos="fade-up" data-aos-delay="800">
+                <span data-i18n="hero_vote"></span>Vote for Us</span> <i class="fa-solid fa-check-to-slot ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Countdown Section -->
+    <section class="py-16 bg-sappha-cream border-b border-sappha-gold/20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-sappha-text mb-10" data-i18n="countdown_title">
+                <i class="fa-regular fa-clock text-sappha-gold mr-3"></i>Time to Change: นับถอยหลังสู่วันเลือกตั้ง
+            </h2>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto" data-aos="fade-up"
+                data-aos-delay="200">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-sappha-gold/20">
+                    <div id="days" class="text-4xl md:text-6xl font-bold text-sappha-gold mb-2">00</div>
+                    <div class="text-gray-500 uppercase tracking-wider text-sm" data-i18n="label_days">Days</div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-sappha-gold/20">
+                    <div id="hours" class="text-4xl md:text-6xl font-bold text-sappha-gold mb-2">00</div>
+                    <div class="text-gray-500 uppercase tracking-wider text-sm" data-i18n="label_hours">Hours</div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-sappha-gold/20">
+                    <div id="minutes" class="text-4xl md:text-6xl font-bold text-sappha-gold mb-2">00</div>
+                    <div class="text-gray-500 uppercase tracking-wider text-sm" data-i18n="label_minutes">Minutes</div>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-sappha-gold/20">
+                    <div id="seconds" class="text-4xl md:text-6xl font-bold text-sappha-gold mb-2">00</div>
+                    <div class="text-gray-500 uppercase tracking-wider text-sm" data-i18n="label_seconds">Seconds</div>
+                </div>
+            </div>
+
+            <p class="mt-8 text-gray-500" data-i18n="countdown_date">13 February 2026</p>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-sappha-gold font-bold tracking-widest uppercase text-sm"
+                    data-i18n="vision_subtitle">Our Vision</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-sappha-text mt-2" data-i18n="section_vision">
+                    วิสัยทัศน์ของเรา</h2>
+                <div class="w-24 h-1 bg-sappha-gold mx-auto mt-6 rounded-full"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Pillar 1: Community -->
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-sappha-gold/20 hover:shadow-md transition-all"
+                    data-aos="fade-up" data-aos-delay="0">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-sappha-gold/10 rounded-full flex items-center justify-center text-sappha-gold text-2xl">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-sappha-navy" data-i18n="vision_1_title">1.
+                            การทำงานร่วมกับชุมชน</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-600 pl-4 list-disc marker:text-sappha-gold">
+                        <li data-i18n="vision_1_item_1">ส่งเสริมศาสนา และเข้าหาชุมชนอย่างสร้างสรรค์</li>
+                        <li data-i18n="vision_1_item_2">สร้างสัมพันธ์ที่ดีระหว่างโรงเรียน</li>
+                        <li data-i18n="vision_1_item_3">ช่วยเหลือครูและนักเรียนภายในโรงเรียน</li>
+                        <li data-i18n="vision_1_item_4">ส่งเสริมและรักษาประเพณีในแม่สอด</li>
+                        <li data-i18n="vision_1_item_5">มีความคิดทันสมัยและสร้างสรรค์ในการทำงาน</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 2: Leadership -->
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-sappha-gold/20 hover:shadow-md transition-all"
+                    data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-sappha-gold/10 rounded-full flex items-center justify-center text-sappha-gold text-2xl">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-sappha-navy" data-i18n="vision_2_title">2.
+                            ความเป็นผู้นำและแบบอย่าง</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-600 pl-4 list-disc marker:text-sappha-gold">
+                        <li data-i18n="vision_2_item_1">เน้น Teamwork และการทำงานเป็นระบบที่เข้าถึงง่าย</li>
+                        <li data-i18n="vision_2_item_2">เป็นผู้นำที่เป็นแบบอย่างที่ดี (Role Model)</li>
+                        <li data-i18n="vision_2_item_3">กล้าแสดงออก ทำเต็มที่และไม่อายใคร</li>
+                        <li data-i18n="vision_2_item_4">มีการเคลื่อนไหวและผลงานของพรรคสม่ำเสมอ</li>
+                        <li data-i18n="vision_2_item_5">พิสูจน์ให้เห็นว่าเป็นสภานักเรียนตัวจริง</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 3: Develop -->
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-sappha-gold/20 hover:shadow-md transition-all"
+                    data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-sappha-gold/10 rounded-full flex items-center justify-center text-sappha-gold text-2xl">
+                            <i class="fa-solid fa-school"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-sappha-navy" data-i18n="vision_3_title">3. การพัฒนาโรงเรียน
+                        </h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-600 pl-4 list-disc marker:text-sappha-gold">
+                        <li data-i18n="vision_3_item_1">ช่วยครูและโรงเรียนขับเคลื่อนกิจกรรมต่างๆ</li>
+                        <li data-i18n="vision_3_item_2">ดูแลความสะอาดและส่งเสริมกีฬา</li>
+                        <li data-i18n="vision_3_item_3">สร้างสรรค์กิจกรรมใหม่ๆ ให้เกิดขึ้นจริง</li>
+                        <li data-i18n="vision_3_item_4">นโยบาย "พูดแล้วทำจริง"</li>
+                        <li data-i18n="vision_3_item_5">เป็นตัวแทนแข่งขันสร้างชื่อเสียงในนามสภานักเรียน</li>
+                    </ul>
+                </div>
+
+                <!-- Pillar 4: Communication -->
+                <div class="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-sm border border-sappha-gold/20 hover:shadow-md transition-all"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center gap-4 mb-4">
+                        <div
+                            class="w-12 h-12 bg-sappha-gold/10 rounded-full flex items-center justify-center text-sappha-gold text-2xl">
+                            <i class="fa-solid fa-bullhorn"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-sappha-navy" data-i18n="vision_4_title">4.
+                            การสื่อสารและประชาสัมพันธ์</h3>
+                    </div>
+                    <ul class="space-y-2 text-gray-600 pl-4 list-disc marker:text-sappha-gold">
+                        <li data-i18n="vision_4_item_1">อัปเดตข่าวสารทั้งในและนอกโรงเรียนอย่างรวดเร็ว</li>
+                        <li data-i18n="vision_4_item_2">นำเสนอผ่านกราฟิกที่สวยงาม ทันสมัย และน่าสนใจ</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policies Section -->
+    <section id="policies" class="py-20 bg-sappha-cream">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-sappha-gold font-bold tracking-widest uppercase text-sm"
+                    data-i18n="policies_subtitle">Our Policies</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-sappha-text mt-2" data-i18n="section_policies">นโยบายหลัก
+                </h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Policy 1 -->
+                <div class="glossy-card p-6 rounded-2xl text-center group h-full flex flex-col items-center"
+                    data-aos="flip-up" data-aos-delay="0">
+                    <div
+                        class="w-16 h-16 bg-blue-100 text-sappha-navy rounded-full flex items-center justify-center mb-4 text-3xl group-hover:bg-sappha-gold group-hover:text-white transition-colors">
+                        <i class="fa-regular fa-star"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-sappha-navy" data-i18n="policy_1_title">1. ประกายสรรพ</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="policy_1_desc">การประกวดนักเรียนในแต่ละห้องเรียน
+                        โดยมีการส่งตัวแทนเข้าร่วมกิจกรรมห้องละ 2 คน สร้างความมั่นใจ
+                        ส่งเสริมบุคลิกภาพและความสัมพันธ์ที่ดี</p>
+                </div>
+
+                <!-- Policy 2 -->
+                <div class="glossy-card p-6 rounded-2xl text-center group h-full flex flex-col items-center"
+                    data-aos="flip-up" data-aos-delay="100">
+                    <div
+                        class="w-16 h-16 bg-blue-100 text-sappha-navy rounded-full flex items-center justify-center mb-4 text-3xl group-hover:bg-sappha-gold group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-hand-holding-dollar"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-sappha-navy" data-i18n="policy_2_title">2. ศุกร์ละบาท</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="policy_2_desc">
+                        โครงการรับบริจาคเพื่อนำเงินไปซื้อรางวัลสำหรับกิจกรรมต่างๆ
+                        หรือช่วยเหลือชาวไทยเมื่อเกิดภัยพิบัติ</p>
+                </div>
+
+                <!-- Policy 3 -->
+                <div class="glossy-card p-6 rounded-2xl text-center group h-full flex flex-col items-center"
+                    data-aos="flip-up" data-aos-delay="200">
+                    <div
+                        class="w-16 h-16 bg-blue-100 text-sappha-navy rounded-full flex items-center justify-center mb-4 text-3xl group-hover:bg-sappha-gold group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-recycle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-sappha-navy" data-i18n="policy_3_title">3. รักษ์สรรพ รับแต้ม
+                    </h3>
+                    <p class="text-gray-600 text-sm" data-i18n="policy_3_desc">นโยบายขวดน้ำแลกคะแนน
+                        ลดขยะรีไซเคิลและเพิ่มคะแนนความดีให้กับนักเรียน
+                    </p>
+                </div>
+
+                <!-- Policy 4 -->
+                <div class="glossy-card p-6 rounded-2xl text-center group h-full flex flex-col items-center"
+                    data-aos="flip-up" data-aos-delay="300">
+                    <div
+                        class="w-16 h-16 bg-blue-100 text-sappha-navy rounded-full flex items-center justify-center mb-4 text-3xl group-hover:bg-sappha-gold group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-pump-soap"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-sappha-navy" data-i18n="policy_4_title">4. เข้าง่าย ออกสบาย
+                    </h3>
+                    <p class="text-gray-600 text-sm" data-i18n="policy_4_desc">รักษาความสะอาดห้องน้ำ เติมสบู่/เจลล้างมือ
+                        และ "อโรม่าหน้าสุขา"
+                        เพื่อดับกลิ่นไม่พึงประสงค์</p>
+                </div>
+
+                <!-- Policy 5 -->
+                <div class="glossy-card p-6 rounded-2xl text-center group h-full flex flex-col items-center"
+                    data-aos="flip-up" data-aos-delay="400">
+                    <div
+                        class="w-16 h-16 bg-blue-100 text-sappha-navy rounded-full flex items-center justify-center mb-4 text-3xl group-hover:bg-sappha-gold group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-sappha-navy" data-i18n="policy_5_title">5. เปิดมุมคิด</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="policy_5_desc">ประกวดภาพถ่ายในโรงเรียนตามธีม
+                        และประกวดวิดีโอโปรโมทโรงเรียน
+                        พร้อมเกียรติบัตรสำหรับทุกกิจกรรม</p>
+                </div>
+
+                <!-- Policy 6 -->
+                <div class="glossy-card p-6 rounded-2xl text-center group h-full flex flex-col items-center"
+                    data-aos="flip-up" data-aos-delay="500">
+                    <div
+                        class="w-16 h-16 bg-blue-100 text-sappha-navy rounded-full flex items-center justify-center mb-4 text-3xl group-hover:bg-sappha-gold group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-bullhorn"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-sappha-navy" data-i18n="policy_6_title">6. Poster to Peoples
+                    </h3>
+                    <p class="text-gray-600 text-sm" data-i18n="policy_6_desc">ประชาสัมพันธ์กิจกรรมการแข่งขันต่างๆ
+                        ทั้งภายในและภายนอกโรงเรียนให้ทั่วถึง</p>
+                </div>
+
+                <!-- Policy 7 -->
+                <div class="glossy-card p-6 rounded-2xl text-center group h-full flex flex-col items-center md:col-span-2 lg:col-span-3 lg:w-1/3 lg:mx-auto"
+                    data-aos="flip-up" data-aos-delay="600">
+                    <div
+                        class="w-16 h-16 bg-blue-100 text-sappha-navy rounded-full flex items-center justify-center mb-4 text-3xl group-hover:bg-sappha-gold group-hover:text-white transition-colors">
+                        <i class="fa-solid fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-sappha-navy" data-i18n="policy_7_title">7. สรรพรับฟัง</h3>
+                    <p class="text-gray-600 text-sm" data-i18n="policy_7_desc">QR Code แจ้งปัญหาภายในโรงเรียน
+                        ช่องทางสื่อสารรวดเร็วเพื่อการซ่อมบำรุงและแก้ไขที่มีประสิทธิภาพ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="team" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-sappha-gold font-bold tracking-widest uppercase text-sm"
+                    data-i18n="team_subtitle_top">Exceptional People</span>
+                <h2 class="text-4xl md:text-5xl font-bold text-sappha-text mt-2" data-i18n="section_team">
+                    สมาชิกพรรคของเรา</h2>
+            </div>
+
+            <!-- Hierarchy Layout -->
+            <div class="space-y-12">
+
+                <!-- Level 1: President -->
+                <div class="flex justify-center" data-aos="fade-up">
+                    <div class="glossy-card rounded-xl overflow-hidden text-center pb-6 w-full max-w-xs relative bg-white/60 backdrop-blur-sm border-sappha-gold/50 shadow-lg shadow-sappha-gold/10"
+                        data-room="ม.4/12">
+                        <!-- Decor -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-sappha-gold"></div>
+
+                        <div class="aspect-[3/4] overflow-hidden relative group">
+                            <img src="16.jpg" alt="President"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-base md:text-xl font-bold text-sappha-text">นายวชิรวิชญ์ บุญนพไท (เจมส์)
+                            </h3>
+                            <p class="text-sappha-gold font-bold mb-2 uppercase tracking-wider"
+                                data-i18n="role_president">ประธานนักเรียน</p>
+                            <div class="text-xs text-gray-500">President</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connector Line 1 -->
+                <div class="hidden md:block w-px h-8 bg-sappha-gold/30 mx-auto -my-4"></div>
+                <div class="hidden md:block w-1/2 h-px bg-sappha-gold/30 mx-auto -my-4 relative">
+                    <div class="absolute left-0 top-0 w-px h-8 bg-sappha-gold/30"></div>
+                    <div class="absolute right-0 top-0 w-px h-8 bg-sappha-gold/30"></div>
+                </div>
+
+                <!-- Level 2: Secretaries -->
+                <div
+                    class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 justify-center max-w-3xl mx-auto relative z-10">
+                    <!-- Secretary -->
+                    <div class="glossy-card rounded-xl overflow-hidden text-center pb-6 w-full max-w-xs mx-auto"
+                        data-room="ม.4/1" data-aos="fade-up" data-aos-delay="100">
+                        <div class="aspect-[3/4] overflow-hidden relative group">
+                            <img src="12.jpg" alt="Secretary"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-base md:text-xl font-bold text-sappha-text">นางสาวธัญญรัตน์ จาบสันต์เทียะ
+                                (น้ำขิง)</h3>
+                            <p class="text-sappha-gold font-medium mb-1" data-i18n="role_secretary">เลขาณุการ</p>
+                            <div class="text-xs text-gray-500">Secretary</div>
+                        </div>
+                    </div>
+
+                    <!-- Deputy Secretary -->
+                    <div class="glossy-card rounded-xl overflow-hidden text-center pb-6 w-full max-w-xs mx-auto"
+                        data-room="ม.4/10" data-aos="fade-up" data-aos-delay="200">
+                        <div class="aspect-[3/4] overflow-hidden relative group">
+                            <img src="11.jpg" alt="Deputy Secretary"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-base md:text-xl font-bold text-sappha-text">นางสาวภัททิยา ฉิมสนิท (น้ำพัด)
+                            </h3>
+                            <p class="text-sappha-gold font-medium mb-1" data-i18n="role_deputy_secretary">รองเลขาณุการ
+                            </p>
+                            <div class="text-xs text-gray-500">Deputy Secretary</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connector Line 2 -->
+                <div class="hidden md:block w-px h-8 bg-sappha-gold/30 mx-auto -my-4"></div>
+                <div class="hidden md:block w-3/4 h-px bg-sappha-gold/30 mx-auto -my-4 relative">
+                    <div class="absolute left-0 top-0 w-px h-8 bg-sappha-gold/30"></div>
+                    <div class="absolute left-1/4 top-0 w-px h-8 bg-sappha-gold/30"></div>
+                    <div class="absolute right-1/4 top-0 w-px h-8 bg-sappha-gold/30"></div>
+                    <div class="absolute right-0 top-0 w-px h-8 bg-sappha-gold/30"></div>
+                </div>
+
+                <!-- Level 3: Vice Presidents -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 relative z-10">
+                    <!-- VP 1 -->
+                    <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/11"
+                        data-aos="fade-up" data-aos-delay="300">
+                        <div class="aspect-[3/4] overflow-hidden relative group">
+                            <img src="22.jpg" alt="VP1"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-base md:text-lg font-bold text-sappha-text">นายวธัญญู ทอวัฒนสกุล (ยู)</h3>
+                            <p class="text-sappha-gold text-sm font-medium mb-1" data-i18n="role_vp1">รองประธานคนที่ 1
+                            </p>
+                            <p class="text-sappha-gold text-sm font-light mb-1" data-i18n="role_dept_admin">
+                                (ฝ่ายอำนวยการ)</p>
+                            <div class="text-sm text-gray-400">Vice President 1</div>
+                        </div>
+                    </div>
+
+                    <!-- VP 2 -->
+                    <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/9"
+                        data-aos="fade-up" data-aos-delay="400">
+                        <div class="aspect-[3/4] overflow-hidden relative group">
+                            <img src="10.jpg" alt="VP2"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-base md:text-lg font-bold text-sappha-text">นางสาวศุภกานต์ เทมียะโก
+                                (ปลายฟ้า)
+                            </h3>
+                            <p class="text-sappha-gold text-sm font-medium mb-1" data-i18n="role_vp2">รองประธานคนที่ 2
+                            </p>
+                            <p class="text-sappha-gold text-sm font-light mb-1" data-i18n="role_dept_academic">
+                                (ฝ่ายวิชาการ)</p>
+                            <div class="text-sm text-gray-400">Vice President 2</div>
+                        </div>
+                    </div>
+
+                    <!-- VP 3 -->
+                    <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/3"
+                        data-aos="fade-up" data-aos-delay="500">
+                        <div class="aspect-[3/4] overflow-hidden relative group">
+                            <img src="3.jpg" alt="VP3"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-base md:text-lg font-bold text-sappha-text">นายพีรพัฒน์ เอี่ยมละ (กัปตัน)
+                            </h3>
+                            <p class="text-sappha-gold text-sm font-medium mb-1" data-i18n="role_vp3">รองประธานคนที่ 3
+                            </p>
+                            <p class="text-sappha-gold text-sm font-light mb-1" data-i18n="role_dept_activities">
+                                (ฝ่ายบริหารงานกิจการ)</p>
+                            <div class="text-sm text-gray-400">Vice President 3</div>
+                        </div>
+                    </div>
+
+                    <!-- VP 4 -->
+                    <div class="glossy-card rounded-xl overflow-hidden text-center pb-6" data-room="ม.4/12"
+                        data-aos="fade-up" data-aos-delay="600">
+                        <div class="aspect-[3/4] overflow-hidden relative group">
+                            <img src="13.jpg" alt="VP4"
+                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-base md:text-lg font-bold text-sappha-text">นายกรวิชญ์ กันทะถ้ำ (มิวสิค)
+                            </h3>
+                            <p class="text-sappha-gold text-sm font-medium mb-1" data-i18n="role_vp4">รองประธานคนที่ 4
+                            </p>
+                            <p class="text-sappha-gold text-sm font-light mb-1" data-i18n="role_dept_general">
+                                (ฝ่ายบริหารงานทั่วไป)</p>
+                            <div class="text-sm text-gray-400">Vice President 4</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Connector Line 3 -->
+                <div class="hidden md:block w-px h-16 bg-sappha-gold/30 mx-auto -my-4"></div>
+
+                <!-- Departments Grid (Tetris Layout) -->
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6 max-w-7xl mx-auto pt-8">
+
+                    <!-- Row 1: Finance (3) + Academic (2) -->
+                    <div class="md:col-span-3 bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:px-10 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2"
+                            data-i18n="dept_finance_header">
+                            ฝ่ายการเงินและพัสดุ</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/8"
+                                data-name="นางสาวทิตติกรณ์ แสงหงษ์ (ใบเตย)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="23.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/5"
+                                data-name="นางสาวจันทมณี จันทร์แก้วปง (ใบหม่อน)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="24.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/2" data-name="นายณัฐชัย หมอกชื่นใจ (นัวร์)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="19.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2"
+                            data-i18n="dept_academic_header">
+                            ฝ่ายวิชาการ</h4>
+                        <div class="grid grid-cols-2 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/5"
+                                data-name="นางสาวณัชชา วิชนภัทรสมุทร (พอใจ)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="6.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/12"
+                                data-name="นายพีรพล ทวีทรัพย์ล้ำเลิศ (พี)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="21.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Reception (3) + PR (2) -->
+                    <div class="md:col-span-3 bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:px-10 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2"
+                            data-i18n="dept_reception_header">
+                            ฝ่ายปฏิคม</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-3 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/3" data-name="นายศุภวิชญ์ กล่อมยิ้ม (มิกซ์)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="15.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/3"
+                                data-name="นางสาวสุทธญาณ์ กวินวาณิช (อ้วน)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="4.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/4" data-name="นางสาวศิรภัสสร ต๊ะศิริ (แปม)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="2.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2"
+                            data-i18n="dept_pr_header">
+                            ฝ่ายประชาสัมพันธ์</h4>
+                        <div class="grid grid-cols-2 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/7" data-name="นางสาวนันทิชา หล้าป๋า (น้ำนัน)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="1.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/7"
+                                data-name="นางสาวกมลพรรณ เมธาวิจิตร (ชมพู่)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="27.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 3: Building (2) + Recreation (2) + Discipline (1) -->
+                    <div class="md:col-span-2 bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2 text-sm"
+                            data-i18n="dept_building_header">
+                            ฝ่ายอาคารและศาสนพิธี</h4>
+                        <div class="grid grid-cols-2 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายสุรจักษ์ ธรรมใจ (จักร)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="8.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/7" data-name="นายสมชาย - (ชัย)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="28.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-2 bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up" data-aos-delay="100">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2 text-sm"
+                            data-i18n="dept_recreation_header">
+                            ฝ่ายนันทนาการและชุมชน</h4>
+                        <div class="grid grid-cols-2 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/2"
+                                data-name="นางสาวพรพัสนันท์ เกิดแก้ว (แฟรนด์)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="18.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายศิรชัช ต๊ะสมัย (คิว)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="25.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-1 bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:px-3 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up" data-aos-delay="200">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2"
+                            data-i18n="dept_discipline_header">
+                            ฝ่ายปกครอง</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-1 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/1"
+                                data-name="นางสาวสุพิชฌาย์ ชุมภูเทพ (ข้าวปุ่น)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="20.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 4: AV (5) -->
+                    <div class="md:col-span-5 bg-white/50 backdrop-blur-sm rounded-2xl p-6 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2"
+                            data-i18n="dept_av_header">
+                            ฝ่ายโสตทัศนศึกษา</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายสุวรรณวัฒน์ ก้องเวหา (โต๋)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="9.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/10" data-name="นายณตะวัน สุวรรณจักร์ (ณะโม)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="17.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/2" data-name="นางสาวกาญจนา หลอมทอง (ต้นข้าว)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="7.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/12" data-name="นางสาวโนโน - (โนโน)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="14.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                            <div class="text-center group" data-room="ม.4/8"
+                                data-name="นางสาวจิณัฐตา กิมวานนท์ (โฟกัส)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="5.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Row 5: Committee (1) - Centered -->
+                    <div class="md:col-span-1 md:col-start-3 bg-white/50 backdrop-blur-sm rounded-2xl p-6 md:px-3 border border-sappha-gold/10 h-full flex flex-col"
+                        data-aos="fade-up">
+                        <h4 class="text-lg font-bold text-sappha-navy mb-4 text-center border-b border-sappha-gold/20 pb-2 text-sm"
+                            data-i18n="dept_committee_header">
+                            ฝ่ายคณะกรรมการ</h4>
+                        <div class="grid grid-cols-2 md:grid-cols-1 gap-2 mt-auto">
+                            <div class="text-center group" data-room="ม.4/1" data-name="นางสาวสิริกร ธิติวราพร (กร)">
+                                <div class="aspect-[3/4] w-full rounded-lg mb-1 shadow-sm overflow-hidden"><img
+                                        src="26.jpg"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform">
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+    </section>
+
+    <!-- Student Voice Section -->
+    <section id="contact" class="py-20 relative bg-sappha-navy">
+        <!-- Decoration -->
+        <div
+            class="absolute top-0 right-0 w-64 h-64 bg-sappha-gold opacity-10 rounded-full filter blur-3xl transform translate-x-1/2 -translate-y-1/2">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-64 h-64 bg-sappha-gold opacity-10 rounded-full filter blur-3xl transform -translate-x-1/2 translate-y-1/2">
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 relative z-10 text-center">
+            <h2 class="text-4xl font-bold text-white mb-6" data-i18n="section_contact">
+                เสียงของคุณ...สำคัญที่สุดสำหรับเรา</h2>
+            <p class="text-gray-300 mb-10 text-lg" data-i18n="contact_desc">มีข้อเสนอแนะหรือไอเดียอะไรไหม? บอกเราได้เลย
+                เราพร้อมรับฟังทุกความคิดเห็น</p>
+
+            <form id="feedbackForm"
+                class="bg-white/10 backdrop-blur-md p-8 rounded-2xl shadow-xl border border-white/20">
+                <div class="mb-6">
+                    <textarea id="feedbackMessage" required
+                        class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-sappha-gold focus:border-transparent transition-all"
+                        rows="4" placeholder="แสดงความคิดเห็นของคุณที่นี่..."
+                        data-i18n-placeholder="contact_placeholder"></textarea>
+                </div>
+                <button type="submit"
+                    class="w-full md:w-auto px-10 py-3 bg-sappha-gold hover:bg-white hover:text-sappha-gold text-white font-bold rounded-lg transition-all transform hover:scale-105">
+                    <span data-i18n="contact_submit">ส่งความคิดเห็น</span> <i
+                        class="fa-regular fa-paper-plane ml-2"></i>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-sappha-text text-white py-10 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-landmark text-2xl text-sappha-gold"></i>
+                <div>
+                    <span class="block font-bold text-lg">The New Era of Sappha</span>
+                </div>
+            </div>
+
+            <div class="flex gap-6">
+                <a href="https://www.instagram.com/theneweraofsappha/?utm_source=ig_web_button_share_sheet"
+                    target="_blank"
+                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-sappha-gold hover:text-white transition-all">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://www.tiktok.com/@theneweraofsappha?is_from_webapp=1&sender_device=pc"
+                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-sappha-gold hover:text-white transition-all">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Member Detail Modal -->
+    <div id="member-modal"
+        class="fixed inset-0 z-[100] hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <!-- Backdrop -->
+        <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" onclick="closeModal()"></div>
+
+        <!-- Modal Content -->
+        <div
+            class="relative bg-white rounded-2xl p-6 md:p-8 max-w-4xl w-[90%] md:w-auto mx-4 shadow-2xl transform scale-95 transition-all duration-300 flex flex-col md:flex-row gap-6 md:gap-10 border border-sappha-gold/20">
+            <!-- Close Button -->
+            <button onclick="closeModal()"
+                class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-sappha-gold hover:text-white transition-colors text-gray-500">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Left: Image -->
+            <div class="flex-shrink-0 w-full md:w-64 lg:w-80">
+                <div class="aspect-[3/4] rounded-lg overflow-hidden shadow-lg border border-gray-100">
+                    <img id="modal-img" src="" alt="Member" class="w-full h-full object-cover">
+                </div>
+            </div>
+
+            <!-- Right: Info -->
+            <div class="flex flex-col justify-center min-w-0 md:min-w-[300px]">
+                <div class="mb-2">
+                    <span id="modal-role"
+                        class="inline-block px-3 py-1 bg-sappha-gold/10 text-sappha-gold rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+                        Position
+                    </span>
+                    <h3 id="modal-name" class="text-2xl md:text-3xl font-bold text-sappha-navy leading-tight">Name
+                        Surname</h3>
+                    <p id="modal-nickname" class="text-lg text-gray-500 font-medium">Username</p>
+                </div>
+
+                <div class="w-12 h-1 bg-sappha-gold/30 rounded-full my-4"></div>
+
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3 text-gray-600">
+                        <div class="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-sappha-gold">
+                            <i class="fa-solid fa-layer-group"></i>
+                        </div>
+                        <div>
+                            <p class="text-xs text-gray-400 uppercase">Class</p>
+                            <p id="modal-class" class="font-medium">M.6/X</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 pt-6 border-t border-gray-100">
+                    <p class="italic text-gray-400 text-sm">"The New Era of Sappha"</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Countdown -->
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- Canvas Confetti for celebration effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Set the date we're counting down to
+        const countDownDate = new Date("Feb 13, 2026 00:00:00").getTime();
+
+        // Update the count down every 1 second
+        const x = setInterval(function () {
+
+            // Get today's date and time
+            const now = new Date().getTime();
+
+            // Find the distance between now and the count down date
+            const distance = countDownDate - now;
+
+            // Time calculations for days, hours, minutes and seconds
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Output the result in elements with id
+            document.getElementById("days").innerHTML = days < 10 ? '0' + days : days;
+            document.getElementById("hours").innerHTML = hours < 10 ? '0' + hours : hours;
+            document.getElementById("minutes").innerHTML = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById("seconds").innerHTML = seconds < 10 ? '0' + seconds : seconds;
+
+            // If the count down is over, write some text 
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("days").innerHTML = "00";
+            }
+        }, 1000);
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100,
+        });
+
+        // --- Member Modal Logic ---
+        const modal = document.getElementById('member-modal');
+        const modalContent = modal.querySelector('div.relative');
+        const modalImg = document.getElementById('modal-img');
+        const modalName = document.getElementById('modal-name');
+        const modalNickname = document.getElementById('modal-nickname');
+        const modalRole = document.getElementById('modal-role');
+        const modalClass = document.getElementById('modal-class');
+
+        function openModal(data) {
+            // Populate Data
+            modalImg.src = data.img;
+            modalName.textContent = data.name;
+            modalNickname.textContent = data.nickname || '';
+            modalRole.textContent = data.role;
+            modalClass.textContent = data.room;
+
+            // Show Modal
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before opacity transition
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+                modalContent.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modal.classList.add('opacity-0');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        // Initialize Member Cards
+        document.addEventListener('DOMContentLoaded', () => {
+            // Helper to clean text
+            const clean = (str) => str ? str.trim() : '';
+
+            // 1. Leaders (Glossy Cards)
+            document.querySelectorAll('#team .glossy-card').forEach(card => {
+                // Skip if it's the policies or decoration cards, only target ones with images
+                const img = card.querySelector('img');
+                if (!img) return;
+
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => {
+                    const nameRaw = clean(card.querySelector('h3')?.textContent) || 'Member Name';
+                    const roleRaw = clean(card.querySelector('p')?.textContent) || 'Member';
+                    const roomRaw = card.getAttribute('data-room') || 'M.6/xx';
+
+                    // Try to parse Nickname from Name (e.g., "Name (Nick)")
+                    let name = nameRaw;
+                    let nickname = '';
+                    const match = nameRaw.match(/(.*?)\s*\((.*?)\)/);
+                    if (match) {
+                        name = match[1];
+                        nickname = match[2];
+                    }
+
+                    openModal({
+                        img: img.src,
+                        name: name,
+                        nickname: nickname ? `(${nickname})` : '',
+                        role: roleRaw,
+                        room: roomRaw
+                    });
+                });
+            });
+
+            // 2. Department Members (Grid items)
+            document.querySelectorAll('#team .group[data-room]').forEach(card => {
+                const img = card.querySelector('img');
+                if (!img) return;
+
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', () => {
+                    const nameRaw = card.dataset.name || clean(card.querySelector('p')?.textContent) || 'Member';
+                    // Check for data-room on the group div itself
+                    const roomRaw = card.getAttribute('data-room') || '-';
+
+                    // Find Department Name (traversing up)
+                    const deptContainer = card.closest('.md\\:col-span-1, .md\\:col-span-2, .md\\:col-span-3, .md\\:col-span-5');
+                    const deptName = clean(deptContainer?.querySelector('h4')?.textContent) || 'Staff';
+
+                    // Parse Nickname
+                    let name = nameRaw;
+                    let nickname = '';
+                    const match = nameRaw.match(/(.*?)\s*\((.*?)\)/);
+                    if (match) {
+                        name = match[1];
+                        nickname = match[2];
+                    }
+
+                    openModal({
+                        img: img.src,
+                        name: name,
+                        nickname: nickname ? `(${nickname})` : '',
+                        role: deptName,
+                        room: roomRaw
+                    });
+                });
+            });
+        });
+    </script>
+
+    <!-- Google Sheets Integration Script -->
+    <script>
+        const feedbackForm = document.getElementById('feedbackForm');
+        const submitBtn = feedbackForm.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.innerHTML;
+
+        feedbackForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const message = document.getElementById('feedbackMessage').value;
+            const scriptURL = 'https://script.google.com/macros/s/AKfycbzBZW-4HX9ikGkYRQPbxuETjef_RSf7kmsOZQhg753mIyfpOoKL9Vq_dOxw0JhU3MRVPA/exec';
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> กำลังส่ง...';
+
+            try {
+                // Use no-cors mode to send data without waiting for strict JSON response (Google Script weirdness workaround)
+                await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                // Success - Trigger confetti celebration!
+                celebrateSuccess();
+
+                Swal.fire({
+                    title: 'ส่งความคิดเห็นสำเร็จ!',
+                    text: 'ขอบคุณสำหรับคำแนะนำ เราจะนำไปพัฒนาให้ดียิ่งขึ้น',
+                    icon: 'success',
+                    confirmButtonText: 'ตกลง',
+                    confirmButtonColor: '#Cca43b', // sappha-gold color
+                    background: '#fff',
+                    color: '#1a1a1a'
+                });
+
+                feedbackForm.reset();
+
+            } catch (error) {
+                console.error('Error!', error.message);
+                Swal.fire({
+                    title: 'เกิดข้อผิดพลาด',
+                    text: 'ไม่สามารถส่งข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+                    icon: 'error',
+                    confirmButtonText: 'ตกลง'
+                });
+            } finally {
+                // Reset button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
+        });
+    </script>
+
+    <!-- Scroll Effects & Fun Features -->
+    <script>
+        // Scroll Progress Bar
+        const scrollProgress = document.getElementById('scrollProgress');
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+        const navbar = document.querySelector('nav');
+
+        window.addEventListener('scroll', () => {
+            // Calculate scroll percentage
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+
+            // Update progress bar
+            scrollProgress.style.width = scrollPercent + '%';
+
+            // Show/hide scroll-to-top button
+            if (scrollTop > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+
+            // Navbar scroll effect
+            if (scrollTop > 100) {
+                navbar.classList.add('nav-scrolled');
+            } else {
+                navbar.classList.remove('nav-scrolled');
+            }
+        });
+
+        // Scroll to top functionality
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Confetti celebration function
+        function celebrateSuccess() {
+            // First burst
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#D4AF37', '#FFD700', '#FFC947', '#0F172A', '#ffffff']
+            });
+
+            // Second burst after slight delay
+            setTimeout(() => {
+                confetti({
+                    particleCount: 50,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 },
+                    colors: ['#D4AF37', '#FFD700', '#FFC947']
+                });
+            }, 200);
+
+            setTimeout(() => {
+                confetti({
+                    particleCount: 50,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 },
+                    colors: ['#D4AF37', '#FFD700', '#FFC947']
+                });
+            }, 400);
+        }
+    </script>
+
+    <!-- Language Switcher Script -->
+    <script>
+        const translations = {
+            th: {
+                // Nav
+                nav_home: "หน้าแรก",
+                nav_vision: "วิสัยทัศน์",
+                nav_policies: "นโยบาย",
+                nav_team: "สมาชิกของพรรค",
+                nav_contact: "ติดต่อเรา",
+                // Hero & Countdown
+                hero_subtitle_top: "มาร่วมสร้างอนาคตไปด้วยกัน",
+                hero_slogan: "\"สานต่อล้านนา พัฒนาสู่ยุคใหม่ ด้วยหัวใจพหุวัฒนธรรม\"",
+                hero_vote: "โหวตให้เรา",
+                countdown_title: "ได้เวลาเปลี่ยนแปลง: นับถอยหลังสู่วันเลือกตั้ง",
+                label_days: "วัน",
+                label_hours: "ชั่วโมง",
+                label_minutes: "นาที",
+                label_seconds: "วินาที",
+                countdown_date: "13 กุมภาพันธ์ 2569",
+                // Vision Section
+                vision_subtitle: "วิสัยทัศน์ของเรา",
+                section_vision: "วิสัยทัศน์",
+                vision_1_title: "1. การทำงานร่วมกับชุมชน",
+                vision_1_item_1: "ส่งเสริมศาสนา และเข้าหาชุมชนอย่างสร้างสรรค์",
+                vision_1_item_2: "สร้างสัมพันธ์ที่ดีระหว่างโรงเรียน",
+                vision_1_item_3: "ช่วยเหลือครูและนักเรียนภายในโรงเรียน",
+                vision_1_item_4: "ส่งเสริมและรักษาประเพณีในแม่สอด",
+                vision_1_item_5: "มีความคิดทันสมัยและสร้างสรรค์ในการทำงาน",
+                vision_2_title: "2. ความเป็นผู้นำและแบบอย่าง",
+                vision_2_item_1: "เน้น Teamwork และการทำงานเป็นระบบที่เข้าถึงง่าย",
+                vision_2_item_2: "เป็นผู้นำที่เป็นแบบอย่างที่ดี (Role Model)",
+                vision_2_item_3: "กล้าแสดงออก ทำเต็มที่และไม่อายใคร",
+                vision_2_item_4: "มีการเคลื่อนไหวและผลงานของพรรคสม่ำเสมอ",
+                vision_2_item_5: "พิสูจน์ให้เห็นว่าเป็นสภานักเรียนตัวจริง",
+                vision_3_title: "3. การพัฒนาโรงเรียน",
+                vision_3_item_1: "ช่วยครูและโรงเรียนขับเคลื่อนกิจกรรมต่างๆ",
+                vision_3_item_2: "ดูแลความสะอาดและส่งเสริมกีฬา",
+                vision_3_item_3: "สร้างสรรค์กิจกรรมใหม่ๆ ให้เกิดขึ้นจริง",
+                vision_3_item_4: "นโยบาย \"พูดแล้วทำจริง\"",
+                vision_3_item_5: "เป็นตัวแทนแข่งขันสร้างชื่อเสียงในนามสภานักเรียน",
+                vision_4_title: "4. การสื่อสารและประชาสัมพันธ์",
+                vision_4_item_1: "อัปเดตข่าวสารทั้งในและนอกโรงเรียนอย่างรวดเร็ว",
+                vision_4_item_2: "นำเสนอผ่านกราฟิกที่สวยงาม ทันสมัย และน่าสนใจ",
+                // Policies Section
+                policies_subtitle: "นโยบายของเรา",
+                section_policies: "นโยบายหลัก",
+                policy_1_title: "1. ประกายสรรพ",
+                policy_1_desc: "การประกวดนักเรียนในแต่ละห้องเรียน โดยมีการส่งตัวแทนเข้าร่วมกิจกรรมห้องละ 2 คน สร้างความมั่นใจ ส่งเสริมบุคลิกภาพและความสัมพันธ์ที่ดี",
+                policy_2_title: "2. ศุกร์ละบาท",
+                policy_2_desc: "โครงการรับบริจาคเพื่อนำเงินไปซื้อรางวัลสำหรับกิจกรรมต่างๆ หรือช่วยเหลือชาวไทยเมื่อเกิดภัยพิบัติ",
+                policy_3_title: "3. รักษ์สรรพ รับแต้ม",
+                policy_3_desc: "นโยบายขวดน้ำแลกคะแนน ลดขยะรีไซเคิลและเพิ่มคะแนนความดีให้กับนักเรียน",
+                policy_4_title: "4. เข้าง่าย ออกสบาย",
+                policy_4_desc: "รักษาความสะอาดห้องน้ำ เติมสบู่/เจลล้างมือ และ \"อโรม่าหน้าสุขา\" เพื่อดับกลิ่นไม่พึงประสงค์",
+                policy_5_title: "5. เปิดมุมคิด",
+                policy_5_desc: "ประกวดภาพถ่ายในโรงเรียนตามธีม และประกวดวิดีโอโปรโมทโรงเรียน พร้อมเกียรติบัตรสำหรับทุกกิจกรรม",
+                policy_6_title: "6. Poster to Peoples",
+                policy_6_desc: "ประชาสัมพันธ์กิจกรรมการแข่งขันต่างๆ ทั้งภายในและภายนอกโรงเรียนให้ทั่วถึง",
+                policy_7_title: "7. สรรพรับฟัง",
+                policy_7_desc: "QR Code แจ้งปัญหาภายในโรงเรียน ช่องทางสื่อสารรวดเร็วเพื่อการซ่อมบำรุงและแก้ไขที่มีประสิทธิภาพ",
+                // Team Section
+                team_subtitle_top: "บุคลากรคุณภาพ",
+                section_team: "สมาชิกพรรคของเรา",
+                role_president: "ประธานนักเรียน",
+                role_secretary: "เลขาณุการ",
+                role_deputy_secretary: "รองเลขาณุการ",
+                role_vp1: "รองประธานคนที่ 1",
+                role_vp2: "รองประธานคนที่ 2",
+                role_vp3: "รองประธานคนที่ 3",
+                role_vp4: "รองประธานคนที่ 4",
+                role_dept_admin: "(ฝ่ายอำนวยการ)",
+                role_dept_academic: "(ฝ่ายวิชาการ)",
+                role_dept_activities: "(ฝ่ายบริหารงานกิจการ)",
+                role_dept_general: "(ฝ่ายบริหารงานทั่วไป)",
+                dept_finance_header: "ฝ่ายการเงินและพัสดุ",
+                dept_academic_header: "ฝ่ายวิชาการ",
+                dept_reception_header: "ฝ่ายปฏิคม",
+                dept_pr_header: "ฝ่ายประชาสัมพันธ์",
+                dept_building_header: "ฝ่ายอาคารและศาสนพิธี",
+                dept_recreation_header: "ฝ่ายนันทนาการและชุมชน",
+                dept_discipline_header: "ฝ่ายปกครอง",
+                dept_av_header: "ฝ่ายโสตทัศนศึกษา",
+                dept_committee_header: "ฝ่ายคณะกรรมการ",
+                // Contact Section
+                section_contact: "เสียงของคุณ...สำคัญที่สุดสำหรับเรา",
+                contact_desc: "มีข้อเสนอแนะหรือไอเดียอะไรไหม? บอกเราได้เลย เราพร้อมรับฟังทุกความคิดเห็น",
+                contact_placeholder: "แสดงความคิดเห็นของคุณที่นี่...",
+                contact_submit: "ส่งความคิดเห็น"
+            },
+            en: {
+                // Nav
+                nav_home: "Home",
+                nav_vision: "Vision",
+                nav_policies: "Policies",
+                nav_team: "Our Team",
+                nav_contact: "Contact Us",
+                // Hero & Countdown
+                hero_subtitle_top: "Creating The Future Together",
+                hero_slogan: "\"Continuing Lanna Heritage, Developing for a New Era, With a Multicultural Heart\"",
+                hero_vote: "Vote for Us",
+                countdown_title: "Time to Change: Election Countdown",
+                label_days: "Days",
+                label_hours: "Hours",
+                label_minutes: "Minutes",
+                label_seconds: "Seconds",
+                countdown_date: "13 February 2026",
+                // Vision Section
+                vision_subtitle: "Our Vision",
+                section_vision: "Our Vision",
+                vision_1_title: "1. Community Engagement",
+                vision_1_item_1: "Promote religion and approach community creatively",
+                vision_1_item_2: "Build good relationships between schools",
+                vision_1_item_3: "Help teachers and students within the school",
+                vision_1_item_4: "Promote and preserve traditions in Mae Sot",
+                vision_1_item_5: "Have modern and creative thinking in work",
+                vision_2_title: "2. Leadership & Role Model",
+                vision_2_item_1: "Focus on Teamwork and accessible systematic work",
+                vision_2_item_2: "Be a good Role Model",
+                vision_2_item_3: "Express fully and without shame",
+                vision_2_item_4: "Consistent party movement and achievements",
+                vision_2_item_5: "Prove to be the real Student Council",
+                vision_3_title: "3. School Development",
+                vision_3_item_1: "Help teachers and school drive various activities",
+                vision_3_item_2: "Maintain cleanliness and promote sports",
+                vision_3_item_3: "Create new activities to happen for real",
+                vision_3_item_4: "Policy \"Speak and Do\"",
+                vision_3_item_5: "Represent in competitions building reputation for Student Council",
+                vision_4_title: "4. Communication & PR",
+                vision_4_item_1: "Update news inside and outside school quickly",
+                vision_4_item_2: "Present through beautiful, modern, and interesting graphics",
+                // Policies Section
+                policies_subtitle: "Our Policies",
+                section_policies: "Our Core Policies",
+                policy_1_title: "1. Sappha Spark",
+                policy_1_desc: "Student contest in each classroom, sending 2 representatives per room. Builds confidence, promotes personality and good relationships.",
+                policy_2_title: "2. One Baht Friday",
+                policy_2_desc: "Donation project to buy prizes for activities or help Thais during disasters.",
+                policy_3_title: "3. Save Sappha, Get Points",
+                policy_3_desc: "Water bottle for points policy. Reduce recycled waste and increase goodness points for students.",
+                policy_4_title: "4. Easy In, Easy Out",
+                policy_4_desc: "Maintain restroom cleanliness, refill soap/sanitizer, and 'Aroma Face Toilet' to eliminate odors.",
+                policy_5_title: "5. Open Mind Corner",
+                policy_5_desc: "School photo contest by theme and school promo video contest. With certificates for all activities.",
+                policy_6_title: "6. Poster to Peoples",
+                policy_6_desc: "Publicize various competition activities both inside and outside school thoroughly.",
+                policy_7_title: "7. Sappha Listens",
+                policy_7_desc: "QR Code to report problems within school. Fast communication channel for efficient maintenance and solutions.",
+                // Team Section
+                team_subtitle_top: "Exceptional People",
+                section_team: "Our Team Members",
+                role_president: "President",
+                role_secretary: "Secretary",
+                role_deputy_secretary: "Deputy Secretary",
+                role_vp1: "Vice President 1",
+                role_vp2: "Vice President 2",
+                role_vp3: "Vice President 3",
+                role_vp4: "Vice President 4",
+                role_dept_admin: "(Administration Dept)",
+                role_dept_academic: "(Academic Dept)",
+                role_dept_activities: "(Student Activities Dept)",
+                role_dept_general: "(General Administration Dept)",
+                dept_finance_header: "Finance & Supplies Dept",
+                dept_academic_header: "Academic Dept",
+                dept_reception_header: "Reception Dept",
+                dept_pr_header: "Public Relations Dept",
+                dept_building_header: "Building & Religious Dept",
+                dept_recreation_header: "Recreation & Community Dept",
+                dept_discipline_header: "Discipline Dept",
+                dept_av_header: "Audio Visual Dept",
+                dept_committee_header: "Committee Dept",
+                // Contact Section
+                section_contact: "Your Voice Matters Most",
+                contact_desc: "Have any suggestions or ideas? Let us know. We are ready to listen.",
+                contact_placeholder: "Type your feedback here...",
+                contact_submit: "Submit Feedback"
+            },
+            my: {
+                // Nav
+                nav_home: "ပင်မစာမျက်နှာ",
+                nav_vision: "မျှော်မှန်းချက်",
+                nav_policies: "မူဝါဒများ",
+                nav_team: "အဖွဲ့ဝင်များ",
+                nav_contact: "ဆက်သွယ်ရန်",
+                // Hero & Countdown
+                hero_subtitle_top: "အနာဂတ်ကို အတူတကွ ဖန်တီးခြင်း",
+                hero_slogan: "\"လန်နားအမွေအနှစ်ကို ဆက်ခံခြင်း၊ ခေတ်သစ်တစ်ခုသို့ ဖွံ့ဖြိုးတိုးတက်စေခြင်း\"",
+                hero_vote: "မဲပေးပါ",
+                countdown_title: "ပြောင်းလဲချိန်တန်ပြီ - ရွေးကောက်ပွဲနေ့",
+                label_days: "ရက်",
+                label_hours: "နာရီ",
+                label_minutes: "မိနစ်",
+                label_seconds: "စက္ကန့်",
+                countdown_date: "13 ဖေဖော်ဝါရီ 2026",
+                // Vision Section
+                vision_subtitle: "မျှော်မှန်းချက်",
+                section_vision: "ကျွန်ုပ်တို့၏ မျှော်မှန်းချက်",
+                vision_1_title: "1. လူထုနှင့် ပူးပေါင်းဆောင်ရွက်ခြင်း",
+                vision_1_item_1: "ဘာသာတရားကို မြှင့်တင်ပြီး ရပ်ရွာနှင့် ဖန်တီးမှုရှိရှိ ထိတွေ့ဆက်ဆံပါ",
+                vision_1_item_2: "ကျောင်းများအကြား ဆက်ဆံရေးကောင်းမွန်အောင် တည်ဆောက်ပါ",
+                vision_1_item_3: "ကျောင်းတွင်းရှိ ဆရာ/ဆရာမများနှင့် ကျောင်းသားများအား ကူညီပါ",
+                vision_1_item_4: "မဲဆောက်ရှိ ရိုးရာဓလေ့များကို ထိန်းသိမ်းမြှင့်တင်ပါ",
+                vision_1_item_5: "ခေတ်မီပြီး ဖန်တီးမှုရှိသော အတွေးအခေါ်ဖြင့် အလုပ်လုပ်ပါ",
+                vision_2_title: "2. ဦးဆောင်မှုနှင့် စံပြဖြစ်ခြင်း",
+                vision_2_item_1: "အဖွဲ့လိုက်လုပ်ဆောင်မှုနှင့် စနစ်တကျ လုပ်ဆောင်မှုကို အလေးထားပါ",
+                vision_2_item_2: "စံပြခေါင်းဆောင်ကောင်း ဖြစ်ပါစေ",
+                vision_2_item_3: "ရဲရဲဝံ့ဝံ့ ထုတ်ဖော်ပြသပါ",
+                vision_2_item_4: "ပါတီ၏ လှုပ်ရှားမှုများနှင့် အောင်မြင်မှုများကို စဉ်ဆက်မပြတ် ဖော်ပြပါ",
+                vision_2_item_5: "စစ်မှန်သော ကျောင်းသားကောင်စီဖြစ်ကြောင်း သက်သေပြပါ",
+                vision_3_title: "3. ကျောင်းဖွံ့ဖြိုးတိုးတက်ရေး",
+                vision_3_item_1: "ဆရာများနှင့် ကျောင်း၏ လှုပ်ရှားမှုများကို ကူညီပံ့ပိုးပါ",
+                vision_3_item_2: "သန့်ရှင်းရေးကို ထိန်းသိမ်းပြီး အားကစားကို မြှင့်တင်ပါ",
+                vision_3_item_3: "လှုပ်ရှားမှုအသစ်များကို အမှန်တကယ် ဖြစ်ပေါ်လာအောင် ဖန်တီးပါ",
+                vision_3_item_4: "\"ပြောသည့်အတိုင်း လုပ်သည်\" ဟူသော မူဝါဒ",
+                vision_3_item_5: "ကျောင်းသားကောင်စီ၏ ဂုဏ်သိက္ခာကို မြှင့်တင်ရန် ပြိုင်ပွဲများတွင် ကိုယ်စားပြုပါ",
+                vision_4_title: "4. ဆက်သွယ်ရေးနှင့် ပြန်ကြားရေး",
+                vision_4_item_1: "ကျောင်းတွင်းနှင့် ကျောင်းပြင်ပ သတင်းများကို လျင်မြန်စွာ အပ်ဒိတ်လုပ်ပါ",
+                vision_4_item_2: "လှပ၊ ခေတ်မီပြီး စိတ်ဝင်စားဖွယ် ဂရပ်ဖစ်များဖြင့် တင်ပြပါ",
+                // Policies Section
+                policies_subtitle: "မူဝါဒများ",
+                section_policies: "အဓိက မူဝါဒများ",
+                policy_1_title: "1. Sappha Spark",
+                policy_1_desc: "စာသင်ခန်းတစ်ခုလျှင် ကိုယ်စားလှယ် ၂ ဦး စေလွှတ်၍ ကျောင်းသားများ ယုံကြည်မှု တည်ဆောက်ခြင်း။",
+                policy_2_title: "2. သောကြာနေ့ တစ်ဘတ်",
+                policy_2_desc: "လှုပ်ရှားမှုများအတွက် ဆုလက်ဆောင်များ ဝယ်ယူရန် သို့မဟုတ် ဘေးအန္တရာယ်ကျရောက်ချိန်တွင် ကူညီရန် အလှူခံခြင်း။",
+                policy_3_title: "3. Save Sappha, Get Points",
+                policy_3_desc: "ရေဘူးဖြင့် အမှတ်လဲလှယ်ခြင်း။ ပြန်လည်အသုံးပြုနိုင်သော စွန့်ပစ်ပစ္စည်းများကို လျှော့ချခြင်း။",
+                policy_4_title: "4. အဝင်လွယ် အထွက်လွယ်",
+                policy_4_desc: "အိမ်သာသန့်ရှင်းရေး၊ ဆပ်ပြာဖြည့်ခြင်းနှင့် အနံ့ဆိုးပျောက်ဆေးများ ထားရှိခြင်း။",
+                policy_5_title: "5. Open Mind Corner",
+                policy_5_desc: "ကျောင်းတွင်း ဓာတ်ပုံပြိုင်ပွဲနှင့် ဗီဒီယိုပြိုင်ပွဲများ ကျင်းပခြင်း။",
+                policy_6_title: "6. Poster to Peoples",
+                policy_6_desc: "ကျောင်းတွင်းနှင့် ကျောင်းပြင်ပ ပြိုင်ပွဲလှုပ်ရှားမှုများကို နှံ့နှံ့စပ်စပ် ပြန်ကြားပေးခြင်း။",
+                policy_7_title: "7. Sappha Listens",
+                policy_7_desc: "ကျောင်းတွင်း ပြဿနာများကို တိုင်ကြားရန် QR Code။ လျင်မြန်သော ဆက်သွယ်ရေး လမ်းကြောင်း။",
+                // Team Section
+                team_subtitle_top: "ထူးချွန်ပုဂ္ဂိုလ်များ",
+                section_team: "ပါတီအဖွဲ့ဝင်များ",
+                role_president: "ကျောင်းသားဥက္ကဋ္ဌ",
+                role_secretary: "အတွင်းရေးမှူး",
+                role_deputy_secretary: "ဒုတိယ အတွင်းရေးမှူး",
+                role_vp1: "ဒုတိယ ဥက္ကဋ္ဌ (၁)",
+                role_vp2: "ဒုတိယ ဥက္ကဋ္ဌ (၂)",
+                role_vp3: "ဒုတိယ ဥက္ကဋ္ဌ (၃)",
+                role_vp4: "ဒုတိယ ဥက္ကဋ္ဌ (၄)",
+                role_dept_admin: "(စီမံရေးရာဌာန)",
+                role_dept_academic: "(ပညာရေးဌာန)",
+                role_dept_activities: "(ကျောင်းသားရေးရာဌာန)",
+                role_dept_general: "(အထွေထွေအုပ်ချုပ်ရေးဌာန)",
+                dept_finance_header: "ဘဏ္ဍာရေးနှင့် ပစ္စည်းဌာန",
+                dept_academic_header: "ပညာရေးဌာန",
+                dept_reception_header: "ဧည့်ခံဌာန",
+                dept_pr_header: "ပြန်ကြားရေးဌာန",
+                dept_building_header: "အဆောက်အဦနှင့် ဘာသာရေးဌာန",
+                dept_recreation_header: "ဖျော်ဖြေရေးနှင့် လူထုဆက်ဆံရေးဌာန",
+                dept_discipline_header: "စည်းကမ်းထိန်းသိမ်းရေးဌာန",
+                dept_av_header: "အသံနှင့် ရုပ်သံဌာန",
+                dept_committee_header: "ကော်မတီဌာန",
+                // Contact Section
+                section_contact: "သင့်အသံသည် အရေးကြီးဆုံးဖြစ်သည်",
+                contact_desc: "အကြံပြုချက်များ ရှိပါသလား? ကျွန်ုပ်တို့ကို ပြောပြပါ။ အရာအားလုံးကို နားထောင်ရန် အသင့်ရှိပါသည်။",
+                contact_placeholder: "သင့်အကြံပြုချက်ကို ဤနေရာတွင် ရေးပါ...",
+                contact_submit: "ပေးပို့ပါ"
+            }
+        };
+
+        function setLanguage(lang) {
+            // Update Text Content
+            document.querySelectorAll('[data-i18n]').forEach(element => {
+                const key = element.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+
+            // Update Placeholders
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+                const key = element.getAttribute('data-i18n-placeholder');
+                if (translations[lang] && translations[lang][key]) {
+                    element.placeholder = translations[lang][key];
+                }
+            });
+
+            // Update Buttons
+            ['th', 'en', 'my'].forEach(l => {
+                const btn = document.getElementById('lang-btn-' + l);
+                if (btn) {
+                    if (l === lang) {
+                        btn.classList.add('text-sappha-gold', 'font-bold');
+                        btn.classList.remove('text-gray-500');
+                    } else {
+                        btn.classList.remove('text-sappha-gold', 'font-bold');
+                        btn.classList.add('text-gray-500');
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
