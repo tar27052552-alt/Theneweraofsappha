@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AV Task Manager Pro</title>
+    <title>Sod Na Kub</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
@@ -958,13 +958,13 @@
         <!-- ================= หน้าจอ Login ================= -->
         <div id="loginScreen">
             <div class="login-box">
-                <h2><i class="fas fa-satellite-dish"></i> AV Task Pro</h2>
-                <p>Real-time Cloud Sync ☁️</p>
+                <h2><i class="fas fa-satellite-dish"></i>Sod Na Kub</h2>
+                <p>ศูนย์รวมคนโสต</p>
 
                 <!-- Step 1: กรอก ID -->
                 <div class="login-step active" id="stepId">
                     <div class="form-group">
-                        <label>รหัสพนักงาน (ID)</label>
+                        <label>รหัสประจำตัวนักเรียน (ID)</label>
                         <input type="text" id="loginIdInput" placeholder="กรอกรหัสพนักงานของคุณ..." autocomplete="off">
                         <div id="loginIdError" class="field-error">ไม่พบรหัสพนักงานนี้ในระบบ</div>
                     </div>
@@ -1419,14 +1419,17 @@
                 }
 
                 // sanitize tasks: trim assigneeIds แต่ละตัว และแปลงให้เป็น Array ที่สะอาด
+                // API อาจส่งกลับมาเป็น: string "55|32650", array ["55|32650"], หรือ array ["55","32650"]
                 tasksData = data.tasks ? data.tasks.reverse().map(t => {
                     t.id = String(t.id || '').trim(); // แปลง ID เป็น string เสมอ
-                    if (typeof t.assigneeIds === 'string') {
-                        t.assigneeIds = t.assigneeIds.split(',').map(id => id.trim()).filter(id => id.length > 0);
-                    } else if (!Array.isArray(t.assigneeIds)) {
-                        t.assigneeIds = [];
+                    const raw = t.assigneeIds;
+                    if (typeof raw === 'string') {
+                        t.assigneeIds = raw.split('|').map(id => id.trim()).filter(id => id.length > 0);
+                    } else if (Array.isArray(raw)) {
+                        // flatMap เพื่อ split element ที่มี "|" อยู่ข้างใน เช่น ["55|32650"] → ["55","32650"]
+                        t.assigneeIds = raw.flatMap(id => String(id).split('|')).map(id => id.trim()).filter(id => id.length > 0);
                     } else {
-                        t.assigneeIds = t.assigneeIds.map(id => String(id).trim());
+                        t.assigneeIds = [];
                     }
                     return t;
                 }) : [];
@@ -1634,11 +1637,15 @@
         // ===== Assignee Checkboxes =====
         function renderAssigneeCheckboxes() {
             const container = document.getElementById('assigneeCheckboxes');
+            // จำค่าที่ติ๊กไว้ก่อนล้าง
+            const checkedIds = Array.from(container.querySelectorAll('input:checked')).map(cb => String(cb.value));
+
             container.innerHTML = '';
             Object.values(usersInfo).filter(u => u.role !== 'admin').forEach(u => {
+                const isChecked = checkedIds.includes(String(u.id)) ? 'checked' : '';
                 container.innerHTML += `
                 <label class="checkbox-label">
-                    <input type="checkbox" name="assignees" value="${u.id}">
+                    <input type="checkbox" name="assignees" value="${u.id}" ${isChecked}>
                     <span>${u.name}</span> <span style="opacity:0.6; font-size:10px;">${deptIcons[u.dept] || '👤'}</span>
                 </label>`;
             });
@@ -1734,7 +1741,7 @@
             if (!/^\d{4}$/.test(pin)) return showToast('PIN ต้องเป็นตัวเลข 4 หลักเท่านั้น', 'warning');
 
             showLoader(true);
-            const ok = await apiCall('editMember', { data: { id, name, dept, role, pin, initial: name.charAt(0), createdAt: usersInfo[id].createdAt } });
+            const ok = await apiCall('editMember', { id, data: { id, name, dept, role, pin, initial: name.charAt(0), createdAt: usersInfo[id].createdAt } });
             if (ok) {
                 closeEditMemberModal();
                 showToast('อัปเดตข้อมูลสำเร็จ', 'success');
@@ -1888,7 +1895,7 @@
                 data: {
                     id: taskId,
                     title: document.getElementById('taskTitle').value,
-                    assigneeIds: assignees,
+                    assigneeIds: assignees.join('|'),
                     type: document.getElementById('taskType').value,
                     postDate: document.getElementById('taskPostDate').value,
                     details: document.getElementById('taskDetails').value,
@@ -2051,7 +2058,7 @@
             if (assigneeIds.length === 0) return showToast('กรุณาเลือกผู้รับผิดชอบอย่างน้อย 1 คน', 'warning');
 
             showLoader(true);
-            const ok = await apiCall('updateTask', { id, data: { title, postDate, type, details, assigneeIds } });
+            const ok = await apiCall('updateTask', { id, data: { title, postDate, type, details, assigneeIds: assigneeIds.join('|') } });
             if (ok) {
                 closeEditTaskModal();
                 showToast('อัปเดตงานเรียบร้อย', 'success');
