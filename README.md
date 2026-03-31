@@ -1,0 +1,2157 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AV Task Manager Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales-all.min.js'></script>
+
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-panel: #1e1e1e;
+            --bg-input: #2d2d2d;
+            --border-color: #333333;
+            --primary: #bb86fc;
+            --primary-hover: #9965f4;
+            --secondary: #03dac6;
+            --secondary-hover: #01b8a7;
+            --text-main: #e0e0e0;
+            --text-muted: #9e9e9e;
+            --danger: #cf6679;
+            --warning: #f2c94c;
+            --success: #6fcf97;
+            --info: #2196f3;
+            --color-graphic: #ff7597;
+            --color-video: #ffb86c;
+            --color-photo: #8be9fd;
+            --color-content: #50fa7b;
+            --color-admin: #f1c40f;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 15px;
+            box-sizing: border-box;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: var(--bg-panel);
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .btn-main,
+        .btn-secondary,
+        .btn-success,
+        .btn-danger,
+        .btn-outline {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Sarabun', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .btn-main {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .btn-main:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: #000;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        .btn-success {
+            background-color: var(--success);
+            color: #000;
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: #000;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .btn-outline:hover {
+            background: var(--danger);
+            color: #000;
+        }
+
+        .btn-sm {
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 6px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .form-group select,
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-input);
+            color: var(--text-main);
+            font-family: 'Sarabun', sans-serif;
+            font-size: 14px;
+            box-sizing: border-box;
+            transition: 0.2s;
+        }
+
+        .form-group select:focus,
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .input-error {
+            border-color: var(--danger) !important;
+        }
+
+        .field-error {
+            color: var(--danger);
+            font-size: 11px;
+            margin-top: 4px;
+            display: none;
+        }
+
+        .field-error.show {
+            display: block;
+        }
+
+        /* --- Login Screen --- */
+        #loginScreen {
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 70vh;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .login-box h2 {
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .login-box p {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        /* PIN dots */
+        .pin-display {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .pin-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background: transparent;
+            transition: 0.2s;
+        }
+
+        .pin-dot.filled {
+            background: var(--primary);
+        }
+
+        .pin-pad {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 240px;
+            margin: 0 auto;
+        }
+
+        .pin-key {
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text-main);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Sarabun', sans-serif;
+            transition: 0.2s;
+        }
+
+        .pin-key:hover {
+            background: rgba(187, 134, 252, 0.15);
+            border-color: var(--primary);
+        }
+
+        .pin-key.danger {
+            color: var(--danger);
+            border-color: transparent;
+            font-size: 14px;
+        }
+
+        .pin-shake {
+            animation: shake 0.4s ease;
+        }
+
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0)
+            }
+
+            20% {
+                transform: translateX(-8px)
+            }
+
+            40% {
+                transform: translateX(8px)
+            }
+
+            60% {
+                transform: translateX(-6px)
+            }
+
+            80% {
+                transform: translateX(6px)
+            }
+        }
+
+        .login-step {
+            display: none;
+        }
+
+        .login-step.active {
+            display: block;
+        }
+
+        /* --- App Screen --- */
+        #appScreen {
+            display: none;
+        }
+
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 25px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .user-info h3 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: var(--secondary);
+            background: rgba(3, 218, 198, 0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .app-content {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* --- Dashboard Stats --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .stat-card:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-number {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .workload-list {
+            margin-top: 15px;
+            font-size: 13px;
+            text-align: left;
+            background: var(--bg-input);
+            padding: 10px;
+            border-radius: 8px;
+            max-height: 120px;
+            overflow-y: auto;
+        }
+
+        .workload-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 4px;
+        }
+
+        /* --- Admin Area --- */
+        .admin-controls {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            display: none;
+        }
+
+        .admin-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px dashed var(--primary);
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            background: var(--bg-input);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid transparent;
+            transition: 0.2s;
+        }
+
+        .checkbox-label:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .checkbox-label input:checked+span {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .checkbox-label:has(input:checked) {
+            border-color: var(--primary);
+            background: rgba(187, 134, 252, 0.1);
+        }
+
+        .checkbox-label input {
+            display: none;
+        }
+
+        /* --- Filter Bar --- */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-family: 'Sarabun', sans-serif;
+            font-size: 13px;
+            transition: 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: #000;
+            border-color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* --- Calendar & Sections --- */
+        .calendar-section {
+            background: var(--bg-input);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-header h3 {
+            margin: 0;
+            color: var(--text-main);
+            font-size: 18px;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .fc-theme-standard .fc-scrollgrid,
+        .fc-theme-standard td,
+        .fc-theme-standard th {
+            border-color: var(--border-color);
+        }
+
+        .fc-col-header-cell {
+            background-color: rgba(255, 255, 255, 0.02);
+            padding: 5px 0;
+        }
+
+        .fc .fc-button-primary {
+            background-color: var(--border-color);
+            border: none;
+            color: var(--text-main);
+            text-transform: capitalize;
+        }
+
+        .fc .fc-button-primary:not(:disabled).fc-button-active,
+        .fc .fc-button-primary:hover {
+            background-color: var(--primary);
+            color: #000;
+        }
+
+        .fc-event {
+            border: none;
+            border-radius: 4px;
+            padding: 2px 4px;
+            font-size: 11px;
+            cursor: pointer;
+            margin-bottom: 2px;
+        }
+
+        /* --- Task Cards --- */
+        .task-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .task-card {
+            background-color: var(--bg-input);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .task-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .task-card.todo {
+            border-left: 4px solid var(--danger);
+        }
+
+        .task-card.doing {
+            border-left: 4px solid var(--warning);
+        }
+
+        .task-card.review {
+            border-left: 4px solid var(--info);
+        }
+
+        .task-card.done {
+            border-left: 4px solid var(--success);
+            opacity: 0.6;
+        }
+
+        .task-card-title {
+            margin: 0;
+            font-size: 15px;
+            color: #fff;
+        }
+
+        .badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+            border: 1px solid transparent;
+        }
+
+        .badge.todo {
+            background: rgba(207, 102, 121, 0.2);
+            color: var(--danger);
+            border-color: rgba(207, 102, 121, 0.5);
+        }
+
+        .badge.doing {
+            background: rgba(242, 201, 76, 0.2);
+            color: var(--warning);
+            border-color: rgba(242, 201, 76, 0.5);
+        }
+
+        .badge.review {
+            background: rgba(33, 150, 243, 0.2);
+            color: var(--info);
+            border-color: rgba(33, 150, 243, 0.5);
+        }
+
+        .badge.done {
+            background: rgba(111, 207, 151, 0.2);
+            color: var(--success);
+            border-color: rgba(111, 207, 151, 0.5);
+        }
+
+        .empty-state {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            background: var(--bg-input);
+            border-radius: 10px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .team-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+
+        .team-tag {
+            background: rgba(255, 255, 255, 0.1);
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: #ccc;
+        }
+
+        /* --- Modals --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 15px;
+            backdrop-filter: blur(3px);
+        }
+
+        .modal-content {
+            background: var(--bg-panel);
+            width: 100%;
+            max-width: 550px;
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+        }
+
+        /* --- Task Detail / Submit Area --- */
+        .reject-reason-box {
+            background: rgba(207, 102, 121, 0.1);
+            border-left: 4px solid var(--danger);
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            font-size: 13px;
+            color: #ffb3b3;
+        }
+
+        .submission-area {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            border: 1px dashed var(--border-color);
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .file-upload-wrapper input[type=file] {
+            font-size: 100px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            height: 100%;
+        }
+
+        .file-upload-btn {
+            border: 2px dashed var(--primary);
+            color: var(--primary);
+            background: rgba(187, 134, 252, 0.05);
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+            font-size: 13px;
+        }
+
+        .file-upload-btn:hover {
+            background: rgba(187, 134, 252, 0.1);
+        }
+
+        .image-preview {
+            width: 100%;
+            max-height: 250px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border-color);
+            background: #000;
+        }
+
+        .submitted-data-box {
+            background: var(--bg-input);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            color: #ddd;
+            margin-bottom: 15px;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .external-link-btn {
+            display: inline-block;
+            background: rgba(3, 218, 198, 0.1);
+            color: var(--secondary);
+            padding: 6px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 12px;
+            border: 1px solid var(--secondary);
+            margin-bottom: 10px;
+        }
+
+        .external-link-btn:hover {
+            background: var(--secondary);
+            color: #000;
+        }
+
+        /* --- Member Management --- */
+        .member-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+            max-height: 250px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+
+        .member-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .member-info-block {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .member-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .member-details h4 {
+            margin: 0;
+            font-size: 14px;
+            color: #fff;
+        }
+
+        .member-details span {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .id-badge {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            font-family: monospace;
+        }
+
+        /* --- Toast Notifications --- */
+        #toastContainer {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--bg-input);
+            border-left: 4px solid var(--primary);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            animation: slideIn 0.3s ease-out forwards;
+            opacity: 0;
+            transform: translateX(100%);
+        }
+
+        .toast.success {
+            border-color: var(--success);
+        }
+
+        .toast.error {
+            border-color: var(--danger);
+        }
+
+        .toast.warning {
+            border-color: var(--warning);
+        }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeOut {
+            to {
+                opacity: 0;
+            }
+        }
+
+        #loaderOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            color: var(--primary);
+            font-size: 30px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loaderOverlay"><i class="fas fa-spinner fa-spin"></i></div>
+
+    <div class="container">
+
+        <!-- ================= หน้าจอ Login ================= -->
+        <div id="loginScreen">
+            <div class="login-box">
+                <h2><i class="fas fa-satellite-dish"></i> AV Task Pro</h2>
+                <p>Real-time Cloud Sync ☁️</p>
+
+                <!-- Step 1: กรอก ID -->
+                <div class="login-step active" id="stepId">
+                    <div class="form-group">
+                        <label>รหัสพนักงาน (ID)</label>
+                        <input type="text" id="loginIdInput" placeholder="กรอกรหัสพนักงานของคุณ..." autocomplete="off">
+                        <div id="loginIdError" class="field-error">ไม่พบรหัสพนักงานนี้ในระบบ</div>
+                    </div>
+                    <button class="btn-main" id="btnNextStep" style="width:100%;" disabled><i
+                            class="fas fa-arrow-right"></i> ถัดไป</button>
+                    <div style="margin-top: 10px; font-size: 12px; color: var(--text-muted);" id="loginStatus">
+                        กำลังเชื่อมต่อระบบ...</div>
+                </div>
+
+                <!-- Step 2: กรอก PIN -->
+                <div class="login-step" id="stepPin">
+                    <div style="font-size: 13px; color: var(--text-muted); margin-bottom: 15px;">
+                        ยินดีต้อนรับ <strong id="pinWelcomeName" style="color:#fff;"></strong><br>กรุณากรอก PIN 4 หลัก
+                    </div>
+                    <div class="pin-display" id="pinDisplay">
+                        <div class="pin-dot" id="dot0"></div>
+                        <div class="pin-dot" id="dot1"></div>
+                        <div class="pin-dot" id="dot2"></div>
+                        <div class="pin-dot" id="dot3"></div>
+                    </div>
+                    <div id="pinError"
+                        style="color: var(--danger); font-size: 12px; min-height: 18px; margin-bottom: 8px;"></div>
+                    <div class="pin-pad" id="pinPad">
+                        <button class="pin-key" data-key="1">1</button>
+                        <button class="pin-key" data-key="2">2</button>
+                        <button class="pin-key" data-key="3">3</button>
+                        <button class="pin-key" data-key="4">4</button>
+                        <button class="pin-key" data-key="5">5</button>
+                        <button class="pin-key" data-key="6">6</button>
+                        <button class="pin-key" data-key="7">7</button>
+                        <button class="pin-key" data-key="8">8</button>
+                        <button class="pin-key" data-key="9">9</button>
+                        <button class="pin-key danger" data-key="back"><i class="fas fa-chevron-left"></i></button>
+                        <button class="pin-key" data-key="0">0</button>
+                        <button class="pin-key danger" data-key="cancel" style="font-size:12px;">ยกเลิก</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= หน้าจอหลัก (App) ================= -->
+        <div id="appScreen">
+            <div class="app-header">
+                <div class="user-profile">
+                    <div class="avatar" id="userAvatar">อ</div>
+                    <div class="user-info">
+                        <h3 id="userName">ชื่อ</h3>
+                        <span class="user-role" id="userRole">ตำแหน่ง</span>
+                    </div>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-outline" style="color:var(--primary); border-color:var(--primary); display:none;"
+                        id="btnManageMembers" onclick="openMemberModal()"><i class="fas fa-users-cog"></i>
+                        จัดการทีม</button>
+                    <button class="btn-outline" style="color:var(--info); border-color:var(--info);"
+                        onclick="openEditMemberModal(currentUser.id)"><i class="fas fa-user-edit"></i> โปรไฟล์</button>
+                    <button class="btn-outline" id="btnLogout"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
+                </div>
+            </div>
+
+            <div class="app-content">
+
+                <!-- 📊 Dashboard -->
+                <div class="dashboard-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">งานทั้งหมดในระบบ</div>
+                        <div class="stat-number" id="statTotal">0</div>
+                    </div>
+                    <div class="stat-card" style="border-color: rgba(111, 207, 151, 0.3);">
+                        <div class="stat-label" style="color: var(--success)">งานที่เสร็จแล้ว (Done)</div>
+                        <div class="stat-number" id="statDone" style="color: var(--success)">0</div>
+                    </div>
+                    <div class="stat-card" style="border-color: rgba(33, 150, 243, 0.3);">
+                        <div class="stat-label" style="color: var(--info)">งานรอตรวจ (Review)</div>
+                        <div class="stat-number" id="statReview" style="color: var(--info)">0</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label"><i class="fas fa-fire"></i> ภาระงานรายบุคคล (กำลังทำ)</div>
+                        <div class="workload-list" id="workloadList"></div>
+                    </div>
+                </div>
+
+                <!-- ฟอร์มสั่งงาน (Admin เท่านั้น) -->
+                <div id="adminControls" class="admin-controls">
+                    <div class="admin-box">
+                        <h3 style="color: var(--primary); margin-top: 0; margin-bottom: 15px; font-size: 16px;"><i
+                                class="fas fa-plus-circle"></i> สั่งงานใหม่ (มอบหมายงาน)</h3>
+                        <form id="taskForm">
+                            <div class="form-grid">
+                                <div class="form-group full-width">
+                                    <label>ชื่องาน / คอนเทนต์</label>
+                                    <input type="text" id="taskTitle" required placeholder="เช่น ตัดต่อคลิป Vlog EP.5">
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>ผู้รับผิดชอบ (เลือกได้หลายคน)</label>
+                                    <div id="assigneeCheckboxes" class="checkbox-group"></div>
+                                    <div id="assigneeError" class="field-error">กรุณาเลือกผู้รับผิดชอบอย่างน้อย 1 คน
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>วันที่ต้องส่ง / ลงเพจ</label>
+                                    <input type="date" id="taskPostDate" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>ประเภทงาน</label>
+                                    <select id="taskType">
+                                        <option value="graphic">🎨 กราฟิก</option>
+                                        <option value="video">🎬 วิดีโอ</option>
+                                        <option value="photo">📸 ถ่ายภาพ</option>
+                                        <option value="content">📝 คอนเทนต์</option>
+                                    </select>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label>บรีฟงาน (รายละเอียด)</label>
+                                    <textarea id="taskDetails" rows="2"
+                                        placeholder="ใส่ข้อมูลที่ต้องการให้ครบถ้วน..."></textarea>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn-main"><i class="fas fa-paper-plane"></i>
+                                บันทึกสั่งงานลงระบบ</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- ปฏิทิน -->
+                <div class="calendar-section">
+                    <div class="section-header">
+                        <h3><i class="far fa-calendar-alt"></i> ปฏิทินคิวงานของทีม</h3>
+                        <div class="legend">
+                            <div class="legend-item"><span class="dot" style="background: var(--color-graphic);"></span>
+                                กราฟิก</div>
+                            <div class="legend-item"><span class="dot" style="background: var(--color-video);"></span>
+                                วิดีโอ</div>
+                            <div class="legend-item"><span class="dot" style="background: var(--color-photo);"></span>
+                                ถ่ายภาพ</div>
+                            <div class="legend-item"><span class="dot" style="background: var(--color-content);"></span>
+                                คอนเทนต์</div>
+                        </div>
+                    </div>
+                    <div id="calendar"></div>
+                </div>
+
+                <!-- งานของฉัน -->
+                <div style="margin-top: 10px;">
+                    <div
+                        style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 15px; flex-wrap:wrap; gap:10px;">
+                        <h3 style="margin: 0; font-size: 18px;"><i class="fas fa-tasks"></i> รายการงานของฉัน
+                            (คลิกเพื่ออัปเดต / ส่งงาน)</h3>
+                        <div class="filter-bar" id="filterBar">
+                            <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                            <button class="filter-btn" data-filter="todo">🔴 ยังไม่เริ่ม</button>
+                            <button class="filter-btn" data-filter="doing">🟡 กำลังทำ</button>
+                            <button class="filter-btn" data-filter="review">🔵 รอตรวจ</button>
+                            <button class="filter-btn" data-filter="done">🟢 เสร็จแล้ว</button>
+                        </div>
+                    </div>
+                    <div class="task-grid" id="myTasksGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Modal: จัดการสมาชิกทีม ================= -->
+    <div class="modal-overlay" id="memberModal" style="z-index: 1002;">
+        <div class="modal-content" style="max-width: 500px;" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeMemberModal()"><i class="fas fa-times"></i></button>
+            <h3 style="margin-top:0; color: var(--primary);"><i class="fas fa-users-cog"></i> จัดการสมาชิกในทีม</h3>
+
+            <div
+                style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; border: 1px dashed var(--border-color); margin-bottom: 15px;">
+                <h4 style="margin:0 0 10px 0; font-size: 14px;">เพิ่มสมาชิกใหม่</h4>
+                <form id="addMemberForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <input type="text" id="newMemberId" placeholder="รหัสเข้าใช้ (เช่น EMP01)" required
+                        style="grid-column: 1 / 2; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun';">
+                    <input type="text" id="newMemberName" placeholder="ชื่อเล่น (เช่น น้องส้ม)" required
+                        style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun';">
+                    <select id="newMemberDept" required
+                        style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun';">
+                        <option value="graphic">🎨 กราฟิก</option>
+                        <option value="video">🎬 วิดีโอ</option>
+                        <option value="photo">📸 ถ่ายภาพ</option>
+                        <option value="content">📝 คอนเทนต์</option>
+                        <option value="admin">👑 แอดมิน</option>
+                    </select>
+                    <select id="newMemberRole" required
+                        style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun';">
+                        <option value="member">พนักงาน (Member)</option>
+                        <option value="admin">หัวหน้าทีม (Admin)</option>
+                    </select>
+                    <div style="grid-column: 1 / -1;">
+                        <label style="font-size: 12px; color: var(--text-muted); display:block; margin-bottom:4px;">PIN
+                            4 หลัก (สำหรับเข้าสู่ระบบ)</label>
+                        <input type="password" id="newMemberPin" placeholder="ตั้ง PIN 4 หลัก" maxlength="4"
+                            pattern="[0-9]{4}" required
+                            style="width:100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun'; box-sizing:border-box;"
+                            inputmode="numeric">
+                        <div style="font-size: 11px; color: var(--text-muted); margin-top: 3px;">* ตั้งง่ายๆ เช่น 1234
+                            (สมาชิกเปลี่ยนเองได้ในภายหลัง)</div>
+                    </div>
+                    <button type="submit" class="btn-main" style="grid-column: 1 / -1; padding: 8px;"><i
+                            class="fas fa-user-plus"></i> เพิ่มสมาชิกและสร้างรหัส</button>
+                </form>
+            </div>
+
+            <h4 style="margin:0 0 10px 0; font-size: 14px;">รายชื่อสมาชิกปัจจุบัน</h4>
+            <div class="member-list" id="memberListContainer"></div>
+        </div>
+    </div>
+
+    <!-- ================= Modal: แก้ไขข้อมูลสมาชิก ================= -->
+    <div class="modal-overlay" id="editMemberModal" style="z-index: 1003;">
+        <div class="modal-content" style="max-width: 500px;" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeEditMemberModal()"><i class="fas fa-times"></i></button>
+            <h3 style="margin-top:0; color: var(--primary);"><i class="fas fa-user-edit"></i> แก้ไขข้อมูลส่วนตัว</h3>
+
+            <div
+                style="background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; border: 1px dashed var(--border-color); margin-bottom: 15px;">
+                <form id="editMemberForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                    <input type="text" id="editMemberId" disabled title="ไม่สามารถเปลี่ยน ID ได้"
+                        style="grid-column: 1 / 2; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.3); color: var(--text-muted); font-family: 'Sarabun'; cursor: not-allowed;">
+                    <input type="text" id="editMemberName" required placeholder="ชื่อเล่น"
+                        style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun';">
+                    <select id="editMemberDept" required
+                        style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun';">
+                        <option value="graphic">🎨 กราฟิก</option>
+                        <option value="video">🎬 วิดีโอ</option>
+                        <option value="photo">📸 ถ่ายภาพ</option>
+                        <option value="content">📝 คอนเทนต์</option>
+                        <option value="admin">👑 แอดมิน</option>
+                    </select>
+                    <select id="editMemberRole" required
+                        style="padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun';">
+                        <option value="member">พนักงาน (Member)</option>
+                        <option value="admin">หัวหน้าทีม (Admin)</option>
+                    </select>
+                    <div style="grid-column: 1 / -1;">
+                        <label style="font-size: 12px; color: var(--text-muted); display:block; margin-bottom:4px;">PIN
+                            (4 หลัก)</label>
+                        <input type="password" id="editMemberPin" maxlength="4" pattern="[0-9]{4}" required
+                            style="width:100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun'; box-sizing:border-box;"
+                            inputmode="numeric">
+                    </div>
+                    <button type="submit" class="btn-main" style="grid-column: 1 / -1; padding: 8px;"><i
+                            class="fas fa-save"></i> บันทึกการแก้ไข</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= Modal: แก้ไขงาน (Admin) ================= -->
+    <div class="modal-overlay" id="editTaskModal" style="z-index: 1004;">
+        <div class="modal-content" style="max-width: 560px;" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeEditTaskModal()"><i class="fas fa-times"></i></button>
+            <h3 style="margin-top:0; color: var(--warning);"><i class="fas fa-edit"></i> แก้ไขงาน</h3>
+            <form id="editTaskForm" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <input type="hidden" id="editTaskId">
+                <div style="grid-column: 1 / -1;">
+                    <label style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">ชื่องาน /
+                        คอนเทนต์</label>
+                    <input type="text" id="editTaskTitle" required
+                        style="width:100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun'; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label
+                        style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">วันที่ต้องส่ง</label>
+                    <input type="date" id="editTaskPostDate" required
+                        style="width:100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun'; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label
+                        style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">ประเภทงาน</label>
+                    <select id="editTaskType"
+                        style="width:100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun'; box-sizing:border-box;">
+                        <option value="graphic">🎨 กราฟิก</option>
+                        <option value="video">🎬 วิดีโอ</option>
+                        <option value="photo">📸 ถ่ายภาพ</option>
+                        <option value="content">📝 คอนเทนต์</option>
+                    </select>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label
+                        style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">ผู้รับผิดชอบ</label>
+                    <div id="editAssigneeCheckboxes" class="checkbox-group"></div>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                    <label style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">บรีฟงาน
+                        (รายละเอียด)</label>
+                    <textarea id="editTaskDetails" rows="3"
+                        style="width:100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun'; box-sizing:border-box; resize:vertical;"></textarea>
+                </div>
+                <button type="submit" class="btn-main"
+                    style="grid-column: 1 / -1; padding: 10px; background: var(--warning); color: #000;"><i
+                        class="fas fa-save"></i> บันทึกการแก้ไขงาน</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= Modal: รายละเอียดงาน & ส่งงาน ================= -->
+    <div class="modal-overlay" id="taskModal" onclick="handleModalOverlayClick(event, 'taskModal')">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="close-modal" onclick="closeTaskModal()"><i class="fas fa-times"></i></button>
+
+            <h2 id="modalTitle" style="margin: 0 0 5px 0; color: var(--primary); font-size: 18px;"></h2>
+            <div
+                style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px; display:flex; gap:15px; flex-wrap:wrap;">
+                <span><i class="fas fa-users"></i> <span id="modalAssignees"></span></span>
+                <span><i class="fas fa-calendar-day"></i> เดดไลน์: <span id="modalPostDate"
+                        style="color:#fff;"></span></span>
+            </div>
+
+            <div
+                style="background: rgba(0,0,0,0.3); padding: 12px; border-radius: 8px; margin-bottom: 15px; font-size: 13px;">
+                <div style="color: var(--text-muted); margin-bottom: 5px;">บรีฟจากหัวหน้า:</div>
+                <div id="modalDetails" style="color: #eee; line-height: 1.5; white-space: pre-wrap;"></div>
+            </div>
+
+            <div id="rejectReasonAlert" class="reject-reason-box" style="display:none;">
+                <strong>⚠️ หัวหน้าสั่งแก้:</strong> <span id="rejectReasonText"></span>
+            </div>
+
+            <!-- ปุ่มเริ่มงาน: แสดงเฉพาะผู้ถูก Assign เท่านั้น (ไม่ใช่ Admin) -->
+            <div id="modalStartAction" style="display:none; text-align:center; margin-bottom: 15px;">
+                <button class="btn-secondary" onclick="changeStatusToDoing()"><i class="fas fa-play"></i>
+                    คลิกเพื่อเริ่มดำเนินการงานนี้</button>
+            </div>
+
+            <div id="submissionArea" class="submission-area" style="display:none;">
+                <h4 style="margin:0 0 10px 0; color: var(--info); font-size: 14px;"><i
+                        class="fas fa-cloud-upload-alt"></i> ส่งงานให้หัวหน้าตรวจ</h4>
+
+                <div class="file-upload-wrapper">
+                    <div class="file-upload-btn" id="uploadBtnUI"><i class="fas fa-image"></i> แนบรูปภาพตัวอย่างผลงาน
+                        (ไม่เกิน 1MB)</div>
+                    <input type="file" id="workImage" accept="image/*" onchange="previewAndCompressImage(this)">
+                </div>
+                <img id="imgPreview" class="image-preview" style="display:none;">
+
+                <div class="form-group" style="margin-bottom:10px;">
+                    <label>🔗 แนบลิงก์ Google Drive / YouTube</label>
+                    <input type="url" id="workLink" placeholder="https://drive.google.com/...">
+                    <div id="workLinkError" class="field-error">รูปแบบ URL ไม่ถูกต้อง (ต้องขึ้นต้นด้วย https://)</div>
+                </div>
+
+                <div class="form-group" style="margin-bottom:15px;">
+                    <label>📝 แคปชั่นหรือข้อความถึงหัวหน้า</label>
+                    <textarea id="workCaption" rows="2" placeholder="พิมพ์อธิบายการส่งงาน..."></textarea>
+                </div>
+
+                <button class="btn-main" onclick="submitWorkForReview()"
+                    style="width:100%; background-color: var(--info); color: #fff;">
+                    <i class="fas fa-paper-plane"></i> ยืนยันการส่งงาน
+                </button>
+            </div>
+
+            <div id="reviewArea" class="submission-area" style="display:none;">
+                <h4 style="margin:0 0 10px 0; color: var(--secondary); font-size: 14px;"><i
+                        class="fas fa-clipboard-check"></i> ข้อมูลผลงานที่ส่งตรวจ</h4>
+                <div id="reviewImageContainer"></div>
+                <div id="reviewLinkContainer"></div>
+                <div class="submitted-data-box">
+                    <strong>แคปชั่น/ข้อความ:</strong><br>
+                    <span id="reviewCaptionText" style="white-space: pre-wrap;"></span>
+                </div>
+
+                <div id="adminReviewActions"
+                    style="display:none; gap:10px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.1); padding-top:15px;">
+                    <button class="btn-success" style="flex:1;" onclick="approveWork()"><i class="fas fa-check"></i>
+                        อนุมัติ (ผ่าน)</button>
+                    <button class="btn-danger" style="flex:1;" onclick="openRejectModal()"><i class="fas fa-times"></i>
+                        ให้แก้ใหม่ (Reject)</button>
+                </div>
+                <div id="userWaitMessage"
+                    style="display:none; text-align:center; color: var(--info); margin-top:10px; font-size:12px;">
+                    <i class="fas fa-hourglass-half"></i> อยู่ระหว่างรอหัวหน้าตรวจสอบ
+                </div>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 20px;">
+                <div id="modalDeleteArea"></div>
+                <span id="modalStatusBadge" class="badge"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Reject -->
+    <div class="modal-overlay" id="rejectModal" style="z-index: 1003;"
+        onclick="handleModalOverlayClick(event, 'rejectModal')">
+        <div class="modal-content" style="max-width: 400px; padding: 20px;" onclick="event.stopPropagation()">
+            <h3 style="margin-top:0; color: var(--danger);"><i class="fas fa-exclamation-triangle"></i>
+                ระบุจุดที่ต้องแก้ไข</h3>
+            <p style="font-size: 13px; color: var(--text-muted);">ข้อความนี้จะไปแจ้งเตือนในหน้าต่างงานของลูกทีม</p>
+            <textarea id="rejectReasonInput" rows="3"
+                style="width:100%; padding:10px; border-radius:8px; background:var(--bg-input); color:#fff; border:1px solid var(--border-color); margin-bottom:15px; font-family:'Sarabun'; box-sizing:border-box;"
+                placeholder="เช่น ปรับฟอนต์ให้ใหญ่ขึ้น, วิดีโอเสียงเบาไป..."></textarea>
+            <div style="display:flex; gap:10px;">
+                <button class="btn-secondary" style="flex:1; background:#444; color:#fff;"
+                    onclick="closeRejectModal()">ยกเลิก</button>
+                <button class="btn-danger" style="flex:1;" onclick="confirmReject()">ยืนยันส่งกลับ</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toastContainer"></div>
+
+    <!-- ================= Scripts ================= -->
+    <script>
+        const API_URL = "https://script.google.com/macros/s/AKfycbxKcrRtJLYvIaJVBghnWVaeFOD566JBiOinvs395pIdNUVUwGkqYQR_wa5wjGMjsoeZ/exec";
+
+        let usersInfo = {};
+        const deptIcons = { 'admin': '👑', 'graphic': '🎨', 'video': '🎬', 'photo': '📸', 'content': '📝' };
+        const typeColors = { 'graphic': '#ff7597', 'video': '#ffb86c', 'photo': '#8be9fd', 'content': '#50fa7b', 'admin': '#f1c40f' };
+
+        let currentUser = null;
+        let tasksData = [];
+        let calendarInstance = null;
+        let activeTaskId = null;
+        let tempCompressedImage = null;
+        let currentFilter = 'all';
+        let pinBuffer = '';
+        let pendingLoginUser = null;
+        let fetchInterval = null;
+
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            const icons = { success: 'check-circle', error: 'exclamation-circle', warning: 'exclamation-triangle', info: 'info-circle' };
+            toast.innerHTML = `<i class="fas fa-${icons[type] || 'info-circle'}"></i> <span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => { toast.style.animation = 'fadeOut 0.3s ease-in forwards'; setTimeout(() => toast.remove(), 300); }, 3000);
+        }
+
+        function showLoader(show) { document.getElementById('loaderOverlay').style.display = show ? 'flex' : 'none'; }
+
+        async function fetchData() {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+
+                usersInfo = {};
+                if (data.members) {
+                    data.members.forEach(m => {
+                        // แปลงทุก field ให้เป็น String เพื่อป้องกัน TypeError เวลาที่ Sheets ส่งตัวเลขมา
+                        m.id = String(m.id || '');
+                        m.name = String(m.name || '');
+                        m.initial = String(m.initial || m.name.charAt(0) || '?');
+                        m.role = String(m.role || 'member');
+                        m.dept = String(m.dept || '');
+                        m.pin = String(m.pin || '').padStart(4, '0');
+                        usersInfo[m.id] = m;
+                    });
+                }
+
+                // sanitize tasks: trim assigneeIds แต่ละตัว และแปลงให้เป็น Array ที่สะอาด
+                tasksData = data.tasks ? data.tasks.reverse().map(t => {
+                    t.id = String(t.id || '').trim(); // แปลง ID เป็น string เสมอ
+                    if (typeof t.assigneeIds === 'string') {
+                        t.assigneeIds = t.assigneeIds.split(',').map(id => id.trim()).filter(id => id.length > 0);
+                    } else if (!Array.isArray(t.assigneeIds)) {
+                        t.assigneeIds = [];
+                    } else {
+                        t.assigneeIds = t.assigneeIds.map(id => String(id).trim());
+                    }
+                    return t;
+                }) : [];
+
+                if (document.getElementById('btnNextStep').disabled) {
+                    document.getElementById('btnNextStep').disabled = false;
+                    document.getElementById('loginStatus').innerHTML = 'ระบบพร้อมใช้งาน ✅';
+                }
+
+                if (currentUser) {
+                    if (!usersInfo[currentUser.id]) {
+                        doLogout();
+                        showToast("บัญชีนี้ถูกลบออกจากระบบแล้ว", "error");
+                        return;
+                    }
+                    if (currentUser.role === 'admin') renderAssigneeCheckboxes();
+                    if (document.getElementById('memberModal').style.display === 'flex') renderMembersList();
+                    renderDashboard();
+                    renderMyTasks();
+                    updateCalendar();
+
+                    if (activeTaskId) {
+                        const stillExists = tasksData.find(t => t.id === activeTaskId);
+                        if (stillExists) window.openTaskModal(activeTaskId);
+                        else closeTaskModal();
+                    }
+                }
+            } catch (e) {
+                console.error("Fetch Error:", e);
+                if (!currentUser) document.getElementById('loginStatus').innerHTML = '❌ เชื่อมต่อฐานข้อมูลไม่ได้';
+            }
+        }
+
+        showLoader(true);
+        fetchData().then(() => showLoader(false));
+
+        function startPolling() {
+            if (fetchInterval) clearInterval(fetchInterval);
+            fetchInterval = setInterval(fetchData, 4000);
+        }
+        function stopPolling() {
+            if (fetchInterval) clearInterval(fetchInterval);
+        }
+
+        async function apiCall(action, params) {
+            try {
+                const res = await fetch(API_URL, { method: 'POST', body: JSON.stringify({ action, ...params }) });
+                const data = await res.json();
+                if (!data.success) throw new Error(data.error);
+                await fetchData();
+                return true;
+            } catch (e) { showToast("เกิดข้อผิดพลาดในการเชื่อมต่อ", "error"); return false; }
+        }
+
+
+
+        // ===== PIN Pad Logic =====
+        function updatePinDots() {
+            for (let i = 0; i < 4; i++) {
+                document.getElementById(`dot${i}`).classList.toggle('filled', i < pinBuffer.length);
+            }
+        }
+
+        function shakePin() {
+            const display = document.getElementById('pinDisplay');
+            display.classList.remove('pin-shake');
+            void display.offsetWidth;
+            display.classList.add('pin-shake');
+        }
+
+        document.getElementById('pinPad').addEventListener('click', (e) => {
+            const key = e.target.closest('[data-key]');
+            if (!key) return;
+            const val = key.dataset.key;
+
+            if (val === 'cancel') {
+                goToStepId();
+                return;
+            }
+            if (val === 'back') {
+                pinBuffer = pinBuffer.slice(0, -1);
+                updatePinDots();
+                document.getElementById('pinError').innerText = '';
+                return;
+            }
+            if (pinBuffer.length >= 4) return;
+            pinBuffer += val;
+            updatePinDots();
+
+            if (pinBuffer.length === 4) {
+                // Verify PIN
+                if (pendingLoginUser.pin === pinBuffer) {
+                    doLogin(pendingLoginUser);
+                } else {
+                    document.getElementById('pinError').innerText = 'PIN ไม่ถูกต้อง กรุณาลองใหม่';
+                    shakePin();
+                    setTimeout(() => {
+                        pinBuffer = '';
+                        updatePinDots();
+                    }, 600);
+                }
+            }
+        });
+
+        function goToStepId() {
+            pinBuffer = '';
+            pendingLoginUser = null;
+            updatePinDots();
+            document.getElementById('pinError').innerText = '';
+            document.getElementById('stepId').classList.add('active');
+            document.getElementById('stepPin').classList.remove('active');
+            document.getElementById('loginIdInput').value = '';
+            document.getElementById('loginIdError').classList.remove('show');
+        }
+
+        // Step 1: Check ID
+        document.getElementById('btnNextStep').addEventListener('click', () => {
+            const inputId = document.getElementById('loginIdInput').value.trim();
+            const errEl = document.getElementById('loginIdError');
+
+            if (!inputId) return;
+
+            if (usersInfo[inputId]) {
+                pendingLoginUser = usersInfo[inputId];
+                pinBuffer = '';
+                updatePinDots();
+                document.getElementById('pinWelcomeName').innerText = pendingLoginUser.name;
+                document.getElementById('stepId').classList.remove('active');
+                document.getElementById('stepPin').classList.add('active');
+                errEl.classList.remove('show');
+            } else {
+                errEl.classList.add('show');
+                document.getElementById('loginIdInput').classList.add('input-error');
+                setTimeout(() => document.getElementById('loginIdInput').classList.remove('input-error'), 1500);
+            }
+        });
+
+        // Enter key on ID input
+        document.getElementById('loginIdInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') { e.preventDefault(); document.getElementById('btnNextStep').click(); }
+        });
+
+        function doLogin(user) {
+            currentUser = user;
+            // แปลงข้อมูลจาก Google Sheets ให้เป็น String ทั้งหมด เพื่อป้องกัน TypeError
+            currentUser.name = String(currentUser.name || '');
+            currentUser.initial = String(currentUser.initial || '');
+            currentUser.role = String(currentUser.role || 'member');
+            currentUser.dept = String(currentUser.dept || '');
+            currentUser.pin = String(currentUser.pin || '');
+            currentUser.id = String(currentUser.id || '');
+
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('appScreen').style.display = 'block';
+            document.getElementById('loginIdInput').value = '';
+
+            const displayInitial = currentUser.initial || currentUser.name.charAt(0) || '?';
+            document.getElementById('userAvatar').innerText = displayInitial;
+            document.getElementById('userName').innerText = currentUser.name;
+            document.getElementById('userRole').innerHTML = currentUser.role === 'admin'
+                ? '<i class="fas fa-crown"></i> หัวหน้าทีม'
+                : `${deptIcons[currentUser.dept] || '👤'} ฝ่าย${currentUser.dept}`;
+
+            if (currentUser.role === 'admin') {
+                document.getElementById('adminControls').style.display = 'grid';
+                document.getElementById('btnManageMembers').style.display = 'inline-flex';
+                renderAssigneeCheckboxes();
+            } else {
+                document.getElementById('adminControls').style.display = 'none';
+                document.getElementById('btnManageMembers').style.display = 'none';
+            }
+
+            initCalendar();
+            renderDashboard();
+            renderMyTasks();
+            startPolling();
+            showToast(`ยินดีต้อนรับ ${currentUser.name} 👋`, 'success');
+        }
+
+        function doLogout() {
+            currentUser = null;
+            pendingLoginUser = null;
+            pinBuffer = '';
+            currentFilter = 'all';
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === 'all'));
+            document.getElementById('appScreen').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            goToStepId();
+            stopPolling();
+            if (calendarInstance) { calendarInstance.destroy(); calendarInstance = null; }
+        }
+
+        document.getElementById('btnLogout').addEventListener('click', doLogout);
+
+        // ===== Filter Bar =====
+        document.getElementById('filterBar').addEventListener('click', (e) => {
+            const btn = e.target.closest('.filter-btn');
+            if (!btn) return;
+            currentFilter = btn.dataset.filter;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderMyTasks();
+        });
+
+        // ===== Assignee Checkboxes =====
+        function renderAssigneeCheckboxes() {
+            const container = document.getElementById('assigneeCheckboxes');
+            container.innerHTML = '';
+            Object.values(usersInfo).filter(u => u.role !== 'admin').forEach(u => {
+                container.innerHTML += `
+                <label class="checkbox-label">
+                    <input type="checkbox" name="assignees" value="${u.id}">
+                    <span>${u.name}</span> <span style="opacity:0.6; font-size:10px;">${deptIcons[u.dept] || '👤'}</span>
+                </label>`;
+            });
+        }
+
+        // ===== Member Management =====
+        window.openMemberModal = () => { renderMembersList(); document.getElementById('memberModal').style.display = 'flex'; };
+        window.closeMemberModal = () => document.getElementById('memberModal').style.display = 'none';
+
+        document.getElementById('addMemberForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const newId = document.getElementById('newMemberId').value.trim();
+            const name = document.getElementById('newMemberName').value.trim();
+            const dept = document.getElementById('newMemberDept').value;
+            const role = document.getElementById('newMemberRole').value;
+            const pin = document.getElementById('newMemberPin').value.trim();
+
+            if (!/^\d{4}$/.test(pin)) return showToast('PIN ต้องเป็นตัวเลข 4 หลักเท่านั้น', 'warning');
+            if (usersInfo[newId]) return showToast(`รหัส ID "${newId}" มีคนใช้งานแล้ว`, 'error');
+
+            showLoader(true);
+            const ok = await apiCall('addMember', { data: { id: newId, name, dept, role, pin, initial: name.charAt(0), createdAt: new Date().toISOString() } });
+            if (ok) { document.getElementById('addMemberForm').reset(); showToast('เพิ่มสมาชิกเรียบร้อย', 'success'); }
+            showLoader(false);
+        });
+
+        function renderMembersList() {
+            const container = document.getElementById('memberListContainer');
+            container.innerHTML = '';
+
+            const adminCount = Object.values(usersInfo).filter(u => u.role === 'admin').length;
+
+            Object.values(usersInfo).forEach(u => {
+                const isMe = u.id === currentUser.id;
+                const isAdmin = u.role === 'admin';
+                // Cannot delete: yourself, OR the last admin
+                const canDelete = !isMe && !(isAdmin && adminCount <= 1);
+
+                const editBtnHtml = `<button class="btn-sm" style="background:var(--info); color:#fff; border:none; margin-right:5px; cursor:pointer;" onclick="openEditMemberModal('${u.id}')" title="แก้ไขข้อมูล"><i class="fas fa-pen"></i></button>`;
+
+                const deleteBtnHtml = canDelete
+                    ? `<button class="btn-danger btn-sm" onclick="deleteMember('${u.id}')"><i class="fas fa-trash"></i></button>`
+                    : `<span style="font-size:11px; color:var(--text-muted);">${isMe ? '(คุณ)' : '(admin คนเดียว)'}</span>`;
+
+                const safeName = String(u.name || "?");
+                const safeInitial = String(u.initial || safeName.charAt(0) || "?");
+
+                container.innerHTML += `
+                <div class="member-item">
+                    <div class="member-info-block">
+                        <div class="member-avatar" style="background: ${typeColors[u.dept] || 'var(--primary)'}">${safeInitial}</div>
+                        <div class="member-details">
+                            <h4>${safeName} ${isAdmin ? '<i class="fas fa-crown" style="color:var(--warning); font-size:12px;"></i>' : ''}</h4>
+                            <span>ID: <strong class="id-badge">${u.id}</strong> | ${deptIcons[u.dept] || '👤'} ${u.dept}</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; align-items:center;">${editBtnHtml} ${deleteBtnHtml}</div>
+                </div>`;
+            });
+        }
+
+        window.openEditMemberModal = (memberId) => {
+            const u = usersInfo[memberId];
+            if (!u) return;
+
+            // สมาชิกทั่วไปจะแก้แผนกและสิทธิ์ของตัวเองไม่ได้ (เฉพาะแอดมินเท่านั้นที่แก้ได้)
+            const canChangeRole = (currentUser.role === 'admin');
+            document.getElementById('editMemberRole').disabled = !canChangeRole;
+            document.getElementById('editMemberDept').disabled = !canChangeRole;
+
+            document.getElementById('editMemberId').value = u.id;
+            document.getElementById('editMemberName').value = u.name;
+            document.getElementById('editMemberDept').value = u.dept;
+            document.getElementById('editMemberRole').value = u.role;
+            document.getElementById('editMemberPin').value = (u.pin || '').toString().padStart(4, '0');
+            document.getElementById('editMemberModal').style.display = 'flex';
+        };
+
+        window.closeEditMemberModal = () => document.getElementById('editMemberModal').style.display = 'none';
+
+        document.getElementById('editMemberForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const id = document.getElementById('editMemberId').value;
+            const name = document.getElementById('editMemberName').value.trim();
+            const dept = document.getElementById('editMemberDept').value;
+            const role = document.getElementById('editMemberRole').value;
+            const pin = document.getElementById('editMemberPin').value.trim();
+
+            if (!/^\d{4}$/.test(pin)) return showToast('PIN ต้องเป็นตัวเลข 4 หลักเท่านั้น', 'warning');
+
+            showLoader(true);
+            const ok = await apiCall('editMember', { data: { id, name, dept, role, pin, initial: name.charAt(0), createdAt: usersInfo[id].createdAt } });
+            if (ok) {
+                closeEditMemberModal();
+                showToast('อัปเดตข้อมูลสำเร็จ', 'success');
+            }
+            showLoader(false);
+        });
+
+        window.deleteMember = async (memberId) => {
+            const target = usersInfo[memberId];
+            if (!target) return;
+
+            if (target.role === 'admin') {
+                const adminCount = Object.values(usersInfo).filter(u => u.role === 'admin').length;
+                if (adminCount <= 1) return showToast('ไม่สามารถลบ Admin คนสุดท้ายได้', 'error');
+            }
+            if (memberId === currentUser.id) return showToast('ไม่สามารถลบบัญชีตัวเองได้', 'error');
+
+            if (!confirm(`ยืนยันการลบสมาชิก "${target.name}"?`)) return;
+            showLoader(true);
+            const ok = await apiCall('deleteMember', { id: memberId });
+            if (ok) showToast('ลบสมาชิกเรียบร้อย', 'success');
+            showLoader(false);
+        };
+
+        // ===== Dashboard =====
+        function renderDashboard() {
+            document.getElementById('statTotal').innerText = tasksData.length;
+            document.getElementById('statDone').innerText = tasksData.filter(t => t.status === 'done').length;
+            document.getElementById('statReview').innerText = tasksData.filter(t => t.status === 'review').length;
+
+            const workload = {};
+            Object.values(usersInfo).filter(u => u.role !== 'admin').forEach(u => workload[u.id] = 0);
+            tasksData.filter(t => t.status !== 'done').forEach(task => {
+                (task.assigneeIds || []).forEach(id => { if (workload[id] !== undefined) workload[id]++; });
+            });
+
+            const wList = document.getElementById('workloadList');
+            wList.innerHTML = '';
+            Object.keys(workload).forEach(id => {
+                const count = workload[id];
+                const color = count > 3 ? 'var(--danger)' : (count > 0 ? 'var(--warning)' : 'var(--text-muted)');
+                const uName = usersInfo[id] ? usersInfo[id].name : 'Unknown';
+                wList.innerHTML += `<div class="workload-item"><span>${uName}</span><strong style="color: ${color}">${count} งาน</strong></div>`;
+            });
+        }
+
+        // ===== Calendar =====
+        function initCalendar() {
+            const calendarEl = document.getElementById('calendar');
+            if (calendarInstance) calendarInstance.destroy();
+
+            // รอให้หน้าต่าง render เสร็จก่อนค่อยสร้าง Calendar เพื่อแก้ปัญหาปฏิทินหาย
+            setTimeout(() => {
+                calendarInstance = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth', locale: 'th', height: 450,
+                    events: getCalendarEvents(),
+                    eventClick: (info) => window.openTaskModal(info.event.id),
+                    eventContent: (arg) => {
+                        const task = tasksData.find(t => String(t.id) === String(arg.event.id));
+                        if (!task) return;
+                        const safeNames = (task.assigneeIds || []).map(id => usersInfo[id] ? String(usersInfo[id].name || "?").split(' ')[0] : '?').join(',');
+                        return {
+                            html: `<div style="padding:1px; overflow:hidden; text-overflow:ellipsis;">
+                                <strong>${arg.event.title}</strong><br><span style="font-size:9px; opacity:0.8;">👤${safeNames}</span>
+                               </div>`
+                        };
+                    }
+                });
+                calendarInstance.render();
+            }, 300); // เพิ่มเป็น 300ms เพื่อความชัวร์
+        }
+
+        function getCalendarEvents() {
+            return tasksData.map(t => ({
+                id: t.id, title: t.title, start: t.postDate, allDay: true,
+                backgroundColor: t.status === 'done' ? (typeColors[t.type] || '#bbb') + '40' : (typeColors[t.type] || '#bbb'),
+                borderColor: 'transparent', textColor: t.status === 'done' ? '#888' : '#000'
+            }));
+        }
+
+        function updateCalendar() {
+            if (calendarInstance) {
+                calendarInstance.removeAllEvents();
+                calendarInstance.addEventSource(getCalendarEvents());
+                calendarInstance.updateSize(); // Force recalculate height to prevent blank boxes
+            }
+        }
+
+        // ===== Task Cards =====
+        function renderMyTasks() {
+            const grid = document.getElementById('myTasksGrid');
+            grid.innerHTML = '';
+
+            let myTasks = currentUser.role === 'admin'
+                ? tasksData
+                : tasksData.filter(t => (t.assigneeIds || []).includes(currentUser.id));
+
+            // Apply filter
+            if (currentFilter !== 'all') {
+                myTasks = myTasks.filter(t => t.status === currentFilter);
+            }
+
+            if (myTasks.length === 0) {
+                grid.innerHTML = `<div class="empty-state">🎉 ไม่มีงานในหมวดนี้</div>`;
+                return;
+            }
+
+            const statusOrder = { 'review': 1, 'doing': 2, 'todo': 3, 'done': 4 };
+            myTasks.sort((a, b) => statusOrder[a.status] - statusOrder[b.status]).forEach(task => {
+                const badgeMap = {
+                    todo: `<span class="badge todo">🔴 ยังไม่เริ่ม</span>`,
+                    doing: `<span class="badge doing">🟡 กำลังทำ</span>`,
+                    review: `<span class="badge review">🔵 รอตรวจ</span>`,
+                    done: `<span class="badge done">🟢 เสร็จแล้ว</span>`
+                };
+                const hasReject = (task.status === 'doing' && task.rejectReason)
+                    ? `<span style="color:var(--danger); font-size:10px; position:absolute; top:-8px; right:-8px; background:#fff; border-radius:50%; padding:2px;"><i class="fas fa-exclamation-circle"></i></span>` : '';
+                const teamHtml = (task.assigneeIds || []).map(id => `<span class="team-tag">${usersInfo[id] ? usersInfo[id].name : '?'}</span>`).join('');
+
+                const card = document.createElement('div');
+                card.className = `task-card ${task.status}`;
+                card.onclick = () => window.openTaskModal(task.id);
+                card.innerHTML = `
+                ${hasReject}
+                <h4 class="task-card-title">${task.title}</h4>
+                <div class="team-tags">${teamHtml}</div>
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-top:10px;">
+                    <span style="font-size:11px; color:var(--text-muted);"><i class="far fa-clock"></i> ส่ง: ${task.postDate}</span>
+                    ${badgeMap[task.status] || ''}
+                </div>`;
+                grid.appendChild(card);
+            });
+        }
+
+        // ===== Task Form =====
+        document.getElementById('taskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const assignees = Array.from(document.querySelectorAll('input[name="assignees"]:checked')).map(cb => cb.value);
+            const errEl = document.getElementById('assigneeError');
+            if (assignees.length === 0) {
+                errEl.classList.add('show');
+                return;
+            }
+            errEl.classList.remove('show');
+
+            showLoader(true);
+            const taskId = Date.now().toString();
+            const ok = await apiCall('addTask', {
+                data: {
+                    id: taskId,
+                    title: document.getElementById('taskTitle').value,
+                    assigneeIds: assignees,
+                    type: document.getElementById('taskType').value,
+                    postDate: document.getElementById('taskPostDate').value,
+                    details: document.getElementById('taskDetails').value,
+                    status: 'todo',
+                    createdAt: new Date().toISOString(),
+                    submittedImage: '', submittedLink: '', submittedCaption: '', rejectReason: ''
+                }
+            });
+            if (ok) {
+                document.getElementById('taskForm').reset();
+                showToast('มอบหมายงานเรียบร้อย', 'success');
+            }
+            showLoader(false);
+        });
+
+        // ===== Task CRUD Helpers =====
+        window.updateTaskField = async (taskId, updateObj, successMsg) => {
+            if (!currentUser) return;
+            showLoader(true);
+            const ok = await apiCall('updateTask', { id: taskId, data: updateObj });
+            if (ok && successMsg) showToast(successMsg, 'success');
+            showLoader(false);
+        };
+
+        window.deleteTask = async (taskId) => {
+            if (!currentUser) return;
+            if (!confirm('ยืนยันการลบงานนี้ออกจากฐานข้อมูล?')) return;
+            showLoader(true);
+            const ok = await apiCall('deleteTask', { id: taskId });
+            if (ok) {
+                closeTaskModal();
+                showToast('ลบงานเรียบร้อย', 'success');
+            }
+            showLoader(false);
+        };
+
+        // ===== Modal: Task Detail =====
+        window.openTaskModal = (taskId) => {
+            activeTaskId = String(taskId);
+            const task = tasksData.find(t => String(t.id) === String(taskId));
+            if (!task) return;
+
+            document.getElementById('imgPreview').style.display = 'none';
+            document.getElementById('workImage').value = '';
+            tempCompressedImage = null;
+            document.getElementById('rejectReasonAlert').style.display = 'none';
+            document.getElementById('workLinkError').classList.remove('show');
+            document.getElementById('workLink').classList.remove('input-error');
+
+            document.getElementById('modalTitle').innerText = task.title;
+
+            // แสดงชื่อเล่นผู้รับผิดชอบ (trim ID ก่อน lookup เพื่อป้องกัน space จาก Sheets)
+            const assigneeNames = (task.assigneeIds || [])
+                .map(id => {
+                    const trimId = String(id).trim();
+                    return usersInfo[trimId] ? `<span class="team-tag">${usersInfo[trimId].name}</span>` : '';
+                }).filter(Boolean).join('');
+            document.getElementById('modalAssignees').innerHTML = assigneeNames || '<span style="color:var(--text-muted)">ไม่มีผู้รับมอบหมาย</span>';
+
+            // แปลงวันที่จาก ISO / Sheets format ให้อ่านง่าย (dd/mm/yyyy)
+            const rawDate = String(task.postDate || '');
+            const parsedDate = new Date(rawDate);
+            const displayDate = isNaN(parsedDate)
+                ? rawDate
+                : parsedDate.toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' });
+            document.getElementById('modalPostDate').innerText = displayDate;
+            document.getElementById('modalDetails').innerText = task.details || '- ไม่มีบรีฟเพิ่มเติม -';
+
+            const isAssignee = (task.assigneeIds || []).includes(currentUser.id);
+            const isAdmin = currentUser.role === 'admin';
+
+            const badge = document.getElementById('modalStatusBadge');
+            const badgeMap = {
+                todo: ['badge todo', '🔴 ยังไม่เริ่ม'],
+                doing: ['badge doing', '🟡 กำลังทำ'],
+                review: ['badge review', '🔵 รอตรวจ'],
+                done: ['badge done', '🟢 เสร็จสมบูรณ์']
+            };
+            if (badgeMap[task.status]) { badge.className = badgeMap[task.status][0]; badge.innerText = badgeMap[task.status][1]; }
+
+            if (task.status === 'doing' && task.rejectReason) {
+                document.getElementById('rejectReasonText').innerText = task.rejectReason;
+                document.getElementById('rejectReasonAlert').style.display = 'block';
+            }
+
+            // Hide all sections first
+            document.getElementById('modalStartAction').style.display = 'none';
+            document.getElementById('submissionArea').style.display = 'none';
+            document.getElementById('reviewArea').style.display = 'none';
+
+            if (task.status === 'todo' && isAssignee) {
+                // FIX: Only assignee (not admin) can start work
+                document.getElementById('modalStartAction').style.display = 'block';
+            } else if (task.status === 'doing' && (isAssignee || isAdmin)) {
+                document.getElementById('submissionArea').style.display = 'block';
+                document.getElementById('uploadBtnUI').style.display = 'block';
+                document.getElementById('workLink').value = '';
+                document.getElementById('workCaption').value = '';
+            } else if (task.status === 'review' || task.status === 'done') {
+                document.getElementById('reviewArea').style.display = 'block';
+                document.getElementById('reviewImageContainer').innerHTML = task.submittedImage
+                    ? `<img src="${task.submittedImage}" class="image-preview" style="display:block;">` : '';
+                document.getElementById('reviewLinkContainer').innerHTML = task.submittedLink
+                    ? `<a href="${task.submittedLink}" target="_blank" rel="noopener noreferrer" class="external-link-btn"><i class="fas fa-external-link-alt"></i> เปิดดูไฟล์แนบ / ลิงก์</a>` : '';
+                document.getElementById('reviewCaptionText').innerText = task.submittedCaption || '- ไม่ได้พิมพ์ข้อความ -';
+                document.getElementById('adminReviewActions').style.display = (task.status === 'review' && isAdmin) ? 'flex' : 'none';
+                document.getElementById('userWaitMessage').style.display = (task.status === 'review' && !isAdmin) ? 'block' : 'none';
+            }
+
+            document.getElementById('modalDeleteArea').innerHTML = isAdmin
+                ? `<div style="display:flex; gap:8px; align-items:center;">
+                    <button style="background:transparent; color:var(--warning); border:1px solid var(--warning); padding:5px 12px; border-radius:6px; cursor:pointer; font-family:'Sarabun'; font-size:13px;" onclick="openEditTaskModal('${task.id}')"><i class="fas fa-edit"></i> แก้ไข</button>
+                    <button style="background:transparent; color:var(--text-muted); border:none; cursor:pointer;" onclick="deleteTask('${task.id}')"><i class="fas fa-trash-alt"></i> ลบ</button>
+                   </div>` : '';
+
+            document.getElementById('taskModal').style.display = 'flex';
+        };
+
+        window.closeTaskModal = () => { document.getElementById('taskModal').style.display = 'none'; activeTaskId = null; };
+        window.changeStatusToDoing = () => window.updateTaskField(activeTaskId, { status: 'doing' }, 'เริ่มงานแล้ว ลุยเลย! 💪');
+
+        // ===== Edit Task Modal =====
+        window.openEditTaskModal = (taskId) => {
+            const task = tasksData.find(t => String(t.id) === String(taskId));
+            if (!task) return;
+
+            document.getElementById('editTaskId').value = task.id;
+            document.getElementById('editTaskTitle').value = task.title;
+            document.getElementById('editTaskPostDate').value = task.postDate;
+            document.getElementById('editTaskType').value = task.type;
+            document.getElementById('editTaskDetails').value = task.details || '';
+
+            // render assignee checkboxes พร้อม tick ที่เลือกไว้
+            const cbContainer = document.getElementById('editAssigneeCheckboxes');
+            cbContainer.innerHTML = '';
+            Object.values(usersInfo).filter(u => u.role !== 'admin').forEach(u => {
+                const checked = (task.assigneeIds || []).includes(u.id) ? 'checked' : '';
+                cbContainer.innerHTML += `
+                <label class="checkbox-label">
+                    <input type="checkbox" name="editAssignees" value="${u.id}" ${checked}>
+                    <span>${u.name}</span> <span style="opacity:0.6; font-size:10px;">${deptIcons[u.dept] || '👤'}</span>
+                </label>`;
+            });
+
+            document.getElementById('editTaskModal').style.display = 'flex';
+        };
+
+        window.closeEditTaskModal = () => document.getElementById('editTaskModal').style.display = 'none';
+
+        document.getElementById('editTaskForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('editTaskId').value;
+            const title = document.getElementById('editTaskTitle').value.trim();
+            const postDate = document.getElementById('editTaskPostDate').value;
+            const type = document.getElementById('editTaskType').value;
+            const details = document.getElementById('editTaskDetails').value.trim();
+            const assigneeIds = Array.from(document.querySelectorAll('input[name="editAssignees"]:checked')).map(cb => cb.value);
+
+            if (!title) return showToast('กรุณาใส่ชื่องาน', 'warning');
+            if (assigneeIds.length === 0) return showToast('กรุณาเลือกผู้รับผิดชอบอย่างน้อย 1 คน', 'warning');
+
+            showLoader(true);
+            const ok = await apiCall('updateTask', { id, data: { title, postDate, type, details, assigneeIds } });
+            if (ok) {
+                closeEditTaskModal();
+                showToast('อัปเดตงานเรียบร้อย', 'success');
+                await fetchData(); // ดึงข้อมูลใหม่ทันทีไม่ต้องรอ polling
+            }
+            showLoader(false);
+        });
+
+        // ===== Image Upload & Compress =====
+        window.previewAndCompressImage = (input) => {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                // FIX: Check 1MB (matching UI label)
+                if (file.size > 1 * 1024 * 1024) {
+                    showToast('ไฟล์ใหญ่เกินไป (ไม่เกิน 1MB)', 'warning');
+                    input.value = '';
+                    return;
+                }
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = new Image();
+                    img.onload = function () {
+                        const canvas = document.createElement('canvas');
+                        let width = img.width, height = img.height;
+                        const maxPx = 800;
+                        if (width > height) { if (width > maxPx) { height = Math.round(height * maxPx / width); width = maxPx; } }
+                        else { if (height > maxPx) { width = Math.round(width * maxPx / height); height = maxPx; } }
+                        canvas.width = width; canvas.height = height;
+                        canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+                        tempCompressedImage = canvas.toDataURL('image/jpeg', 0.7);
+                        const prev = document.getElementById('imgPreview');
+                        prev.src = tempCompressedImage;
+                        prev.style.display = 'block';
+                        document.getElementById('uploadBtnUI').style.display = 'none';
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+
+        // ===== URL Validation =====
+        function isValidUrl(str) {
+            if (!str) return true; // empty is OK (optional field)
+            try { const u = new URL(str); return u.protocol === 'https:' || u.protocol === 'http:'; }
+            catch { return false; }
+        }
+
+        // ===== Submit Work =====
+        window.submitWorkForReview = () => {
+            const link = document.getElementById('workLink').value.trim();
+            const caption = document.getElementById('workCaption').value.trim();
+            const linkErrEl = document.getElementById('workLinkError');
+
+            // Validate URL
+            if (link && !isValidUrl(link)) {
+                linkErrEl.classList.add('show');
+                document.getElementById('workLink').classList.add('input-error');
+                return;
+            }
+            linkErrEl.classList.remove('show');
+            document.getElementById('workLink').classList.remove('input-error');
+
+            if (!tempCompressedImage && !link && !caption) {
+                return showToast('กรุณาแนบข้อมูลส่งงานอย่างน้อย 1 อย่าง', 'warning');
+            }
+
+            window.updateTaskField(activeTaskId, {
+                status: 'review',
+                submittedImage: tempCompressedImage,
+                submittedLink: link,
+                submittedCaption: caption,
+                rejectReason: ''
+            }, 'ส่งงานเรียบร้อย! 🎉');
+        };
+
+        window.approveWork = () => window.updateTaskField(activeTaskId, { status: 'done' }, 'อนุมัติงานเรียบร้อย! ✅');
+
+        window.openRejectModal = () => {
+            document.getElementById('rejectReasonInput').value = '';
+            document.getElementById('rejectModal').style.display = 'flex';
+        };
+        window.closeRejectModal = () => document.getElementById('rejectModal').style.display = 'none';
+
+        window.confirmReject = () => {
+            const reason = document.getElementById('rejectReasonInput').value.trim();
+            if (!reason) return showToast('กรุณาระบุจุดที่ต้องแก้ไข', 'warning');
+            window.updateTaskField(activeTaskId, { status: 'doing', rejectReason: reason }, 'ส่งกลับแก้ไขแล้ว');
+            closeRejectModal();
+        };
+
+        // ===== Close Modal on Overlay Click =====
+        window.handleModalOverlayClick = (event, modalId) => {
+            if (event.target === document.getElementById(modalId)) {
+                document.getElementById(modalId).style.display = 'none';
+                if (modalId === 'taskModal') activeTaskId = null;
+            }
+        };
+    </script>
+
+</body>
+
+</html>
