@@ -1233,7 +1233,8 @@
                 </div>
                 <div>
                     <label
-                        style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">เวลาที่ต้องส่ง / วันประชุม</label>
+                        style="font-size:12px; color:var(--text-muted); display:block; margin-bottom:4px;">เวลาที่ต้องส่ง
+                        / วันประชุม</label>
                     <input type="datetime-local" id="editTaskPostDate" required
                         style="width:100%; padding: 8px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--bg-input); color: #fff; font-family: 'Sarabun'; box-sizing:border-box;">
                 </div>
@@ -1298,23 +1299,17 @@
 
             <div id="submissionArea" class="submission-area" style="display:none;">
                 <h4 style="margin:0 0 10px 0; color: var(--info); font-size: 14px;"><i
-                        class="fas fa-cloud-upload-alt"></i> ส่งงานให้หัวหน้าตรวจ</h4>
-
-                <div class="file-upload-wrapper">
-                    <div class="file-upload-btn" id="uploadBtnUI"><i class="fas fa-image"></i> แนบรูปภาพตัวอย่างผลงาน
-                        (ไม่เกิน 1MB)</div>
-                    <input type="file" id="workImage" accept="image/*" onchange="previewAndCompressImage(this)">
-                </div>
-                <img id="imgPreview" class="image-preview" style="display:none;">
+                        class="fas fa-cloud-upload-alt"></i> ส่งงานให้ตรวจ</h4>
 
                 <div class="form-group" style="margin-bottom:10px;">
-                    <label>🔗 แนบลิงก์ Google Drive / YouTube</label>
-                    <input type="url" id="workLink" placeholder="https://drive.google.com/...">
-                    <div id="workLinkError" class="field-error">รูปแบบ URL ไม่ถูกต้อง (ต้องขึ้นต้นด้วย https://)</div>
+                    <label>🔗 แนบลิงก์ Google Drive / YouTube / Canva (เว้นว่างได้)</label>
+                    <input type="url" id="workLink" placeholder="https://...">
+                    <div id="workLinkError" class="field-error">รูปแบบ URL ไม่ถูกต้อง (ต้องขึ้นต้นด้วย https:// หรือ
+                        http://)</div>
                 </div>
 
                 <div class="form-group" style="margin-bottom:15px;">
-                    <label>📝 แคปชั่นหรือข้อความถึงหัวหน้า</label>
+                    <label>📝 แคปชั่นหรือข้อความ</label>
                     <textarea id="workCaption" rows="2" placeholder="พิมพ์อธิบายการส่งงาน..."></textarea>
                 </div>
 
@@ -1376,7 +1371,7 @@
 
     <!-- ================= Scripts ================= -->
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxKcrRtJLYvIaJVBghnWVaeFOD566JBiOinvs395pIdNUVUwGkqYQR_wa5wjGMjsoeZ/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbxi0gXKeE6AkgiCVSqlboUds8a8DTLtSBafMjuQdyeK0AJFSbM4vSFutiymB3G6ifMS/exec";
 
         let usersInfo = {};
         const deptIcons = { 'admin': '👑', 'graphic': '🎨', 'video': '🎬', 'photo': '📸', 'content': '📝', 'meeting': '🤝' };
@@ -1943,8 +1938,6 @@
             const task = tasksData.find(t => String(t.id) === String(taskId));
             if (!task) return;
 
-            document.getElementById('imgPreview').style.display = 'none';
-            document.getElementById('workImage').value = '';
             tempCompressedImage = null;
             document.getElementById('rejectReasonAlert').style.display = 'none';
             document.getElementById('workLinkError').classList.remove('show');
@@ -1991,23 +1984,30 @@
             document.getElementById('submissionArea').style.display = 'none';
             document.getElementById('reviewArea').style.display = 'none';
 
-            if (task.status === 'todo' && isAssignee) {
-                // FIX: Only assignee (not admin) can start work
-                document.getElementById('modalStartAction').style.display = 'block';
-            } else if (task.status === 'doing' && (isAssignee || isAdmin)) {
-                document.getElementById('submissionArea').style.display = 'block';
-                document.getElementById('uploadBtnUI').style.display = 'block';
-                document.getElementById('workLink').value = '';
-                document.getElementById('workCaption').value = '';
-            } else if (task.status === 'review' || task.status === 'done') {
-                document.getElementById('reviewArea').style.display = 'block';
-                document.getElementById('reviewImageContainer').innerHTML = task.submittedImage
-                    ? `<img src="${task.submittedImage}" class="image-preview" style="display:block;">` : '';
-                document.getElementById('reviewLinkContainer').innerHTML = task.submittedLink
-                    ? `<a href="${task.submittedLink}" target="_blank" rel="noopener noreferrer" class="external-link-btn"><i class="fas fa-external-link-alt"></i> เปิดดูไฟล์แนบ / ลิงก์</a>` : '';
-                document.getElementById('reviewCaptionText').innerText = task.submittedCaption || '- ไม่ได้พิมพ์ข้อความ -';
-                document.getElementById('adminReviewActions').style.display = (task.status === 'review' && isAdmin) ? 'flex' : 'none';
-                document.getElementById('userWaitMessage').style.display = (task.status === 'review' && !isAdmin) ? 'block' : 'none';
+            if (task.type === 'meeting') {
+                document.getElementById('modalStartAction').innerHTML = `<button class="btn-success" onclick="window.updateTaskField(activeTaskId, { status: 'done' }, 'รับทราบ/สิ้นสุดนัดหมาย'); closeTaskModal();"><i class="fas fa-check"></i> รับทราบ / สิ้นสุดการนัดหมาย</button>`;
+                if (task.status !== 'done' && (isAssignee || isAdmin)) {
+                    document.getElementById('modalStartAction').style.display = 'block';
+                }
+            } else {
+                document.getElementById('modalStartAction').innerHTML = `<button class="btn-secondary" onclick="changeStatusToDoing()"><i class="fas fa-play"></i> คลิกเพื่อเริ่มดำเนินการงานนี้</button>`;
+                if (task.status === 'todo' && isAssignee) {
+                    // FIX: Only assignee (not admin) can start work
+                    document.getElementById('modalStartAction').style.display = 'block';
+                } else if (task.status === 'doing' && (isAssignee || isAdmin)) {
+                    document.getElementById('submissionArea').style.display = 'block';
+                    document.getElementById('workLink').value = '';
+                    document.getElementById('workCaption').value = '';
+                } else if (task.status === 'review' || task.status === 'done') {
+                    document.getElementById('reviewArea').style.display = 'block';
+                    document.getElementById('reviewImageContainer').innerHTML = task.submittedImage
+                        ? `<img src="${task.submittedImage}" class="image-preview" style="display:block;">` : '';
+                    document.getElementById('reviewLinkContainer').innerHTML = task.submittedLink
+                        ? `<a href="${task.submittedLink}" target="_blank" rel="noopener noreferrer" class="external-link-btn"><i class="fas fa-external-link-alt"></i> เปิดดูไฟล์แนบ / ลิงก์</a>` : '';
+                    document.getElementById('reviewCaptionText').innerText = task.submittedCaption || '- ไม่ได้พิมพ์ข้อความ -';
+                    document.getElementById('adminReviewActions').style.display = (task.status === 'review' && isAdmin) ? 'flex' : 'none';
+                    document.getElementById('userWaitMessage').style.display = (task.status === 'review' && !isAdmin) ? 'block' : 'none';
+                }
             }
 
             document.getElementById('modalDeleteArea').innerHTML = isAdmin
@@ -2127,8 +2127,8 @@
             linkErrEl.classList.remove('show');
             document.getElementById('workLink').classList.remove('input-error');
 
-            if (!tempCompressedImage && !link && !caption) {
-                return showToast('กรุณาแนบข้อมูลส่งงานอย่างน้อย 1 อย่าง', 'warning');
+            if (!link && !caption) {
+                return showToast('กรุณาแนบลิงก์ หรือ พิมพ์ข้อความอธิบายการส่งงาน', 'warning');
             }
 
             window.updateTaskField(activeTaskId, {
