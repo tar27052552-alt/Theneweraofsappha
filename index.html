@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sod Na</title>
+    <title>AV Task Manager Pro</title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
@@ -33,6 +33,7 @@
             --color-content: #50fa7b;
             --color-admin: #f1c40f;
             --color-meeting: #a29bfe;
+            --color-pr: #ff9f43;
         }
 
         body {
@@ -662,6 +663,11 @@
             border-color: rgba(111, 207, 151, 0.5);
         }
 
+        .task-card.waiting_caption { border-left: 4px solid #b83280; }
+        .task-card.waiting_post { border-left: 4px solid #e67e22; }
+        .badge.waiting_caption { background: rgba(184, 50, 128, 0.2); color: #ff79c6; border-color: rgba(184, 50, 128, 0.5); }
+        .badge.waiting_post { background: rgba(230, 126, 34, 0.2); color: #ffb86c; border-color: rgba(230, 126, 34, 0.5); }
+
         .empty-state {
             grid-column: 1/-1;
             text-align: center;
@@ -959,8 +965,8 @@
         <!-- ================= หน้าจอ Login ================= -->
         <div id="loginScreen">
             <div class="login-box">
-                <h2><i class="fas fa-satellite-dish"></i>Sod na</h2>
-                <p>ศูนย์รวมคนโสต</p>
+                <h2><i class="fas fa-satellite-dish"></i> AV Task Pro</h2>
+                <p>Real-time Cloud Sync ☁️</p>
 
                 <!-- Step 1: กรอก ID -->
                 <div class="login-step active" id="stepId">
@@ -1076,6 +1082,7 @@
                                         <option value="video">🎬 วิดีโอ</option>
                                         <option value="photo">📸 ถ่ายภาพ</option>
                                         <option value="content">📝 คอนเทนต์</option>
+                                        <option value="pr">📢 ประชาสัมพันธ์</option>
                                         <option value="meeting">🤝 นัดประชุม/อื่นๆ</option>
                                     </select>
                                 </div>
@@ -1104,6 +1111,8 @@
                                 ถ่ายภาพ</div>
                             <div class="legend-item"><span class="dot" style="background: var(--color-content);"></span>
                                 คอนเทนต์</div>
+                            <div class="legend-item"><span class="dot" style="background: var(--color-pr);"></span>
+                                ประชาสัมพันธ์</div>
                             <div class="legend-item"><span class="dot" style="background: var(--color-meeting);"></span>
                                 นัดประชุม</div>
                         </div>
@@ -1121,6 +1130,8 @@
                             <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
                             <button class="filter-btn" data-filter="todo">🔴 ยังไม่เริ่ม</button>
                             <button class="filter-btn" data-filter="doing">🟡 กำลังทำ</button>
+                            <button class="filter-btn" data-filter="waiting_caption">🟣 รอแคปชั่น</button>
+                            <button class="filter-btn" data-filter="waiting_post">🟠 รอลงโพส</button>
                             <button class="filter-btn" data-filter="review">🔵 รอตรวจ</button>
                             <button class="filter-btn" data-filter="done">🟢 เสร็จแล้ว</button>
                         </div>
@@ -1151,6 +1162,7 @@
                         <option value="video">🎬 วิดีโอ</option>
                         <option value="photo">📸 ถ่ายภาพ</option>
                         <option value="content">📝 คอนเทนต์</option>
+                        <option value="pr">📢 ประชาสัมพันธ์</option>
                         <option value="admin">👑 แอดมิน</option>
                     </select>
                     <select id="newMemberRole" required
@@ -1197,6 +1209,7 @@
                         <option value="video">🎬 วิดีโอ</option>
                         <option value="photo">📸 ถ่ายภาพ</option>
                         <option value="content">📝 คอนเทนต์</option>
+                        <option value="pr">📢 ประชาสัมพันธ์</option>
                         <option value="admin">👑 แอดมิน</option>
                     </select>
                     <select id="editMemberRole" required
@@ -1247,6 +1260,7 @@
                         <option value="video">🎬 วิดีโอ</option>
                         <option value="photo">📸 ถ่ายภาพ</option>
                         <option value="content">📝 คอนเทนต์</option>
+                        <option value="pr">📢 ประชาสัมพันธ์</option>
                         <option value="meeting">🤝 นัดประชุม/อื่นๆ</option>
                     </select>
                 </div>
@@ -1299,32 +1313,32 @@
 
             <div id="submissionArea" class="submission-area" style="display:none;">
                 <h4 style="margin:0 0 10px 0; color: var(--info); font-size: 14px;"><i
-                        class="fas fa-cloud-upload-alt"></i> ส่งงานให้ตรวจ</h4>
+                        class="fas fa-cloud-upload-alt"></i> อัปเดตงาน</h4>
 
-                <div class="form-group" style="margin-bottom:10px;">
-                    <label>🔗 แนบลิงก์ Google Drive / YouTube / Canva (เว้นว่างได้)</label>
+                <div class="form-group" id="linkGroup" style="margin-bottom:10px;">
+                    <label>🔗 แนบลิงก์ผลงาน Google Drive / YouTube / Canva</label>
                     <input type="url" id="workLink" placeholder="https://...">
                     <div id="workLinkError" class="field-error">รูปแบบ URL ไม่ถูกต้อง (ต้องขึ้นต้นด้วย https:// หรือ
                         http://)</div>
                 </div>
 
-                <div class="form-group" style="margin-bottom:15px;">
-                    <label>📝 แคปชั่นหรือข้อความ</label>
-                    <textarea id="workCaption" rows="2" placeholder="พิมพ์อธิบายการส่งงาน..."></textarea>
+                <div class="form-group" id="captionGroup" style="margin-bottom:15px;">
+                    <label>📝 แคปชั่นสำหรับโพสต์</label>
+                    <textarea id="workCaption" rows="4" placeholder="พิมพ์แคปชั่นสำหรับลงเพจ..."></textarea>
                 </div>
 
-                <button class="btn-main" onclick="submitWorkForReview()"
+                <button class="btn-main" id="submitWorkBtn"
                     style="width:100%; background-color: var(--info); color: #fff;">
-                    <i class="fas fa-paper-plane"></i> ยืนยันการส่งงาน
+                    <i class="fas fa-paper-plane"></i> ยืนยันการส่ง
                 </button>
             </div>
 
             <div id="reviewArea" class="submission-area" style="display:none;">
                 <h4 style="margin:0 0 10px 0; color: var(--secondary); font-size: 14px;"><i
-                        class="fas fa-clipboard-check"></i> ข้อมูลผลงานที่ส่งตรวจ</h4>
+                        class="fas fa-clipboard-check"></i> ข้อมูลผลงานที่ส่ง</h4>
                 <div id="reviewImageContainer"></div>
                 <div id="reviewLinkContainer"></div>
-                <div class="submitted-data-box">
+                <div class="submitted-data-box" id="captionDisplayGroup">
                     <strong>แคปชั่น/ข้อความ:</strong><br>
                     <span id="reviewCaptionText" style="white-space: pre-wrap;"></span>
                 </div>
@@ -1371,11 +1385,11 @@
 
     <!-- ================= Scripts ================= -->
     <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbxi0gXKeE6AkgiCVSqlboUds8a8DTLtSBafMjuQdyeK0AJFSbM4vSFutiymB3G6ifMS/exec";
+        const API_URL = "https://script.google.com/macros/s/AKfycbwb50r_d05LDtZl5P9QI7-o8woaf0NQPUn5RUQhLubcbdL7HNOBg9Un-7t0y8c5ENa_/exec";
 
         let usersInfo = {};
-        const deptIcons = { 'admin': '👑', 'graphic': '🎨', 'video': '🎬', 'photo': '📸', 'content': '📝', 'meeting': '🤝' };
-        const typeColors = { 'graphic': '#ff7597', 'video': '#ffb86c', 'photo': '#8be9fd', 'content': '#50fa7b', 'admin': '#f1c40f', 'meeting': '#a29bfe' };
+        const deptIcons = { 'admin': '👑', 'graphic': '🎨', 'video': '🎬', 'photo': '📸', 'content': '📝', 'pr': '📢', 'meeting': '🤝' };
+        const typeColors = { 'graphic': '#ff7597', 'video': '#ffb86c', 'photo': '#8be9fd', 'content': '#50fa7b', 'pr': '#ff9f43', 'admin': '#f1c40f', 'meeting': '#a29bfe' };
 
         let currentUser = null;
         let tasksData = [];
@@ -1770,7 +1784,7 @@
         function renderDashboard() {
             document.getElementById('statTotal').innerText = tasksData.length;
             document.getElementById('statDone').innerText = tasksData.filter(t => t.status === 'done').length;
-            document.getElementById('statReview').innerText = tasksData.filter(t => t.status === 'review').length;
+            document.getElementById('statReview').innerText = tasksData.filter(t => ['review', 'waiting_caption', 'waiting_post'].includes(t.status)).length;
 
             const workload = {};
             Object.values(usersInfo).filter(u => u.role !== 'admin').forEach(u => workload[u.id] = 0);
@@ -1837,7 +1851,10 @@
 
             let myTasks = currentUser.role === 'admin'
                 ? tasksData
-                : tasksData.filter(t => (t.assigneeIds || []).includes(currentUser.id));
+                : tasksData.filter(t => 
+                    (t.assigneeIds || []).includes(currentUser.id) || 
+                    (currentUser.dept === 'pr' && t.status === 'waiting_caption')
+                  );
 
             // Apply filter
             if (currentFilter !== 'all') {
@@ -1849,12 +1866,14 @@
                 return;
             }
 
-            const statusOrder = { 'review': 1, 'doing': 2, 'todo': 3, 'done': 4 };
+            const statusOrder = { 'waiting_caption': 1, 'review': 2, 'waiting_post': 3, 'doing': 4, 'todo': 5, 'done': 6 };
             myTasks.sort((a, b) => statusOrder[a.status] - statusOrder[b.status]).forEach(task => {
                 const badgeMap = {
                     todo: `<span class="badge todo">🔴 ยังไม่เริ่ม</span>`,
                     doing: `<span class="badge doing">🟡 กำลังทำ</span>`,
                     review: `<span class="badge review">🔵 รอตรวจ</span>`,
+                    waiting_caption: `<span class="badge waiting_caption">🟣 รอแคปชั่น</span>`,
+                    waiting_post: `<span class="badge waiting_post">🟠 รอลงโพส</span>`,
                     done: `<span class="badge done">🟢 เสร็จแล้ว</span>`
                 };
                 const hasReject = (task.status === 'doing' && task.rejectReason)
@@ -1970,6 +1989,8 @@
                 todo: ['badge todo', '🔴 ยังไม่เริ่ม'],
                 doing: ['badge doing', '🟡 กำลังทำ'],
                 review: ['badge review', '🔵 รอตรวจ'],
+                waiting_caption: ['badge waiting_caption', '🟣 รอแคปชั่น'],
+                waiting_post: ['badge waiting_post', '🟠 รอลงโพส'],
                 done: ['badge done', '🟢 เสร็จสมบูรณ์']
             };
             if (badgeMap[task.status]) { badge.className = badgeMap[task.status][0]; badge.innerText = badgeMap[task.status][1]; }
@@ -1986,27 +2007,79 @@
 
             if (task.type === 'meeting') {
                 document.getElementById('modalStartAction').innerHTML = `<button class="btn-success" onclick="window.updateTaskField(activeTaskId, { status: 'done' }, 'รับทราบ/สิ้นสุดนัดหมาย'); closeTaskModal();"><i class="fas fa-check"></i> รับทราบ / สิ้นสุดการนัดหมาย</button>`;
-                if (task.status !== 'done' && (isAssignee || isAdmin)) {
+                if (task.status !== 'done' && isAdmin) {
                     document.getElementById('modalStartAction').style.display = 'block';
                 }
             } else {
                 document.getElementById('modalStartAction').innerHTML = `<button class="btn-secondary" onclick="changeStatusToDoing()"><i class="fas fa-play"></i> คลิกเพื่อเริ่มดำเนินการงานนี้</button>`;
                 if (task.status === 'todo' && isAssignee) {
-                    // FIX: Only assignee (not admin) can start work
                     document.getElementById('modalStartAction').style.display = 'block';
                 } else if (task.status === 'doing' && (isAssignee || isAdmin)) {
                     document.getElementById('submissionArea').style.display = 'block';
-                    document.getElementById('workLink').value = '';
-                    document.getElementById('workCaption').value = '';
-                } else if (task.status === 'review' || task.status === 'done') {
+                    // ป้องกัน polling reset ค่าขณะผู้ใช้กำลังพิมพ์
+                    if (document.activeElement !== document.getElementById('workLink')) {
+                        document.getElementById('workLink').value = task.submittedLink || '';
+                    }
+                    if (document.activeElement !== document.getElementById('workCaption')) {
+                        document.getElementById('workCaption').value = task.submittedCaption || '';
+                    }
+                    
+                    if (task.type === 'graphic' || task.type === 'video') {
+                        document.getElementById('captionGroup').style.display = 'none';
+                        document.getElementById('linkGroup').style.display = 'block';
+                        document.getElementById('submitWorkBtn').onclick = () => window.submitWorkForReview('waiting_caption', 'ส่งให้ PR คิดแคปชั่นต่อ! 🎉');
+                        document.getElementById('submitWorkBtn').innerHTML = '<i class="fas fa-paper-plane"></i> ส่งงานให้ PR (ใส่แค่ลิงก์)';
+                    } else if (task.type === 'photo' || task.type === 'content') {
+                        document.getElementById('captionGroup').style.display = 'none';
+                        document.getElementById('linkGroup').style.display = 'block';
+                        document.getElementById('submitWorkBtn').onclick = () => window.submitWorkForReview('review', 'ส่งงานเรียบร้อย รอแอดมินตรวจ! 🎉');
+                        document.getElementById('submitWorkBtn').innerHTML = '<i class="fas fa-paper-plane"></i> ยืนยันการส่งงาน (จบงาน)';
+                    } else {
+                        document.getElementById('captionGroup').style.display = 'block';
+                        document.getElementById('linkGroup').style.display = 'block';
+                        document.getElementById('submitWorkBtn').onclick = () => window.submitWorkForReview('review', 'ส่งงานเรียบร้อย! 🎉');
+                        document.getElementById('submitWorkBtn').innerHTML = '<i class="fas fa-paper-plane"></i> ยืนยันการส่งงาน';
+                    }
+                } else if (task.status === 'waiting_caption' && (currentUser.dept === 'pr' || isAdmin)) {
+                    document.getElementById('submissionArea').style.display = 'block';
+                    document.getElementById('captionGroup').style.display = 'block';
+                    document.getElementById('linkGroup').style.display = 'none';
+                    // ป้องกัน polling reset ค่าขณะ PR กำลังพิมพ์แคปชั่นอยู่
+                    if (document.activeElement !== document.getElementById('workCaption')) {
+                        document.getElementById('workCaption').value = task.submittedCaption || '';
+                    }
+
+                    document.getElementById('submitWorkBtn').onclick = () => window.submitWorkForReview('waiting_post', 'ส่งแคปชั่นเรียบร้อย รอลงโพส! 🎉');
+                    document.getElementById('submitWorkBtn').innerHTML = '<i class="fas fa-paper-plane"></i> บันทึกแคปชั่น';
+
+                    document.getElementById('reviewArea').style.display = 'block';
+                    document.getElementById('reviewImageContainer').innerHTML = task.submittedImage ? `<img src="${task.submittedImage}" class="image-preview" style="display:block;">` : '';
+                    document.getElementById('reviewLinkContainer').innerHTML = task.submittedLink ? `<a href="${task.submittedLink}" target="_blank" rel="noopener noreferrer" class="external-link-btn"><i class="fas fa-external-link-alt"></i> ดูผลงานกราฟิกที่ส่งมา</a>` : '';
+                    document.getElementById('captionDisplayGroup').style.display = 'none';
+                    document.getElementById('adminReviewActions').style.display = 'none';
+                    document.getElementById('userWaitMessage').style.display = 'none';
+                } else if (task.status === 'review' || task.status === 'waiting_post' || task.status === 'done') {
                     document.getElementById('reviewArea').style.display = 'block';
                     document.getElementById('reviewImageContainer').innerHTML = task.submittedImage
                         ? `<img src="${task.submittedImage}" class="image-preview" style="display:block;">` : '';
                     document.getElementById('reviewLinkContainer').innerHTML = task.submittedLink
                         ? `<a href="${task.submittedLink}" target="_blank" rel="noopener noreferrer" class="external-link-btn"><i class="fas fa-external-link-alt"></i> เปิดดูไฟล์แนบ / ลิงก์</a>` : '';
+                    
+                    document.getElementById('captionDisplayGroup').style.display = 'block';
                     document.getElementById('reviewCaptionText').innerText = task.submittedCaption || '- ไม่ได้พิมพ์ข้อความ -';
-                    document.getElementById('adminReviewActions').style.display = (task.status === 'review' && isAdmin) ? 'flex' : 'none';
-                    document.getElementById('userWaitMessage').style.display = (task.status === 'review' && !isAdmin) ? 'block' : 'none';
+                    
+                    if ((task.status === 'review' || task.status === 'waiting_post') && isAdmin) {
+                        document.getElementById('adminReviewActions').style.display = 'flex';
+                    } else {
+                        document.getElementById('adminReviewActions').style.display = 'none';
+                    }
+                    
+                    if ((task.status === 'review' || task.status === 'waiting_post') && !isAdmin) {
+                        document.getElementById('userWaitMessage').style.display = 'block';
+                        document.getElementById('userWaitMessage').innerHTML = task.status === 'waiting_post' ? '<i class="fas fa-hourglass-half"></i> รอแอดมินนำไปลงโพส' : '<i class="fas fa-hourglass-half"></i> อยู่ระหว่างรอหัวหน้าตรวจสอบ';
+                    } else {
+                        document.getElementById('userWaitMessage').style.display = 'none';
+                    }
                 }
             }
 
@@ -2113,13 +2186,16 @@
         }
 
         // ===== Submit Work =====
-        window.submitWorkForReview = () => {
+        window.submitWorkForReview = (targetStatus = 'review', successMsg = 'ส่งงานเรียบร้อย! 🎉') => {
             const link = document.getElementById('workLink').value.trim();
             const caption = document.getElementById('workCaption').value.trim();
             const linkErrEl = document.getElementById('workLinkError');
+            
+            const isLinkVisible = document.getElementById('linkGroup').style.display !== 'none';
+            const isCaptionVisible = document.getElementById('captionGroup').style.display !== 'none';
 
             // Validate URL
-            if (link && !isValidUrl(link)) {
+            if (isLinkVisible && link && !isValidUrl(link)) {
                 linkErrEl.classList.add('show');
                 document.getElementById('workLink').classList.add('input-error');
                 return;
@@ -2127,17 +2203,27 @@
             linkErrEl.classList.remove('show');
             document.getElementById('workLink').classList.remove('input-error');
 
-            if (!link && !caption) {
+            if (isLinkVisible && !link && targetStatus === 'waiting_caption') {
+                return showToast('กรุณาแนบลิงก์ผลงานกราฟิก', 'warning');
+            }
+            if (isCaptionVisible && !caption && targetStatus === 'waiting_post') {
+                return showToast('กรุณาพิมพ์แคปชั่น', 'warning');
+            }
+            if (isLinkVisible && isCaptionVisible && !link && !caption) {
                 return showToast('กรุณาแนบลิงก์ หรือ พิมพ์ข้อความอธิบายการส่งงาน', 'warning');
             }
 
+            const task = tasksData.find(t => String(t.id) === activeTaskId);
+            const finalLink = isLinkVisible ? link : task.submittedLink;
+            const finalCaption = isCaptionVisible ? caption : task.submittedCaption;
+
             window.updateTaskField(activeTaskId, {
-                status: 'review',
-                submittedImage: tempCompressedImage,
-                submittedLink: link,
-                submittedCaption: caption,
+                status: targetStatus,
+                submittedImage: tempCompressedImage || task.submittedImage || '',
+                submittedLink: finalLink,
+                submittedCaption: finalCaption,
                 rejectReason: ''
-            }, 'ส่งงานเรียบร้อย! 🎉');
+            }, successMsg);
         };
 
         window.approveWork = () => window.updateTaskField(activeTaskId, { status: 'done' }, 'อนุมัติงานเรียบร้อย! ✅');
